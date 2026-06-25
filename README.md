@@ -1,8 +1,5 @@
 # HIPS-Host-Intrusion-Prevention-System
 Enterprise-style Host Intrusion Prevention System featuring file integrity monitoring, network threat detection, behavioral analysis, and MITRE ATT&amp;CK mapping.
-# HIPS - Host Intrusion Prevention System
-
-An enterprise-inspired endpoint security platform designed to monitor, detect, analyze, and respond to threats on Windows endpoints.
 
 ## Key Features
 
@@ -31,4 +28,16 @@ PHP REST API
 MySQL Database
 ↓
 Web Dashboard
+## Screenshots
 
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard2.png)
+
+### Threat Detection
+
+![Threat Detection](alerts/detection.png)
+
+### Agent
+![Agent](Agent/Agent.jpeg)
