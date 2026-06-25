@@ -32,12 +32,12 @@ Web Dashboard
 
 ### Dashboard
 
-![Dashboard](screenshots/dashboard.png)
-![Dashboard](screenshots/dashboard2.png)
+![Dashboard](screenshots/dashboard.jpeg)
+![Dashboard](screenshots/dashboard2.jpeg)
 
 ### Threat Detection
 
-![Threat Detection](alerts/detection.png)
+![Threat Detection](screenshots/alerts.jpeg)
 
 ### Agent
 ![Agent](Agent/Agent.jpeg)
