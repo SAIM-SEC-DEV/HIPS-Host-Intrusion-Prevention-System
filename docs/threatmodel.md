@@ -20,4 +20,4 @@
 - Hardware Compromise
 
 ## Architecture diagram
-![Architecture](docs/architecure.png)
+![Architecture](docs/architecture.png)
