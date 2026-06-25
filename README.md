@@ -37,7 +37,7 @@ Web Dashboard
 
 ### Threat Detection
 
-![Threat Detection](screenshots/alerts.jpeg)
+![Alert](screenshots/alerts.jpeg)
 
 ### Agent
-![Agent](Agent/Agent.jpeg)
+![AGENT](screenshots/Agent.jpeg)
