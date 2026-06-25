@@ -44,4 +44,4 @@ Web Dashboard
 ![AGENT](screenshots/Agent.jpeg)
 
 ##SETUP
-📖 [View Setup Guide]()
+📖 [View Setup Guide](https://saim-sec-dev.github.io/HIPS-Host-Intrusion-Prevention-System/)
