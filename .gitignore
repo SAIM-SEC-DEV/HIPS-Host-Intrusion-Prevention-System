@@ -1,0 +1,14 @@
+*.log
+*.class
+*.tmp
+*.cache
+
+dist/
+build/
+out/
+
+.idea/
+.vscode/
+
+Thumbs.db
+desktop.ini
