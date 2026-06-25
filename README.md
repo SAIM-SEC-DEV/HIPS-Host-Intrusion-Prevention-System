@@ -42,3 +42,6 @@ Web Dashboard
 
 ### Agent
 ![AGENT](screenshots/Agent.jpeg)
+
+##SETUP
+📖 [View Setup Guide]()
