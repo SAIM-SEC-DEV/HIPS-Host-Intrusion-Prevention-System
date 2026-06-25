@@ -29,6 +29,8 @@ MySQL Database
     ↓
 Web Dashboard
 
+![diagram](docs/architecture.png)
+
 ## Screenshots
 
 ### Dashboard
