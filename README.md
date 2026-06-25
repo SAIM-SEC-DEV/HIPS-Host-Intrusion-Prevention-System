@@ -42,7 +42,3 @@ Web Dashboard
 
 ### Agent
 ![AGENT](screenshots/Agent.jpeg)
-
-### Setup
-📖 [View Setup Guide](docs/https://SAIM-SEC-DEV.github.io/HIPS/setup-guide.html)
-
