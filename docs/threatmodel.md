@@ -18,3 +18,6 @@
 
 - Physical Attacks
 - Hardware Compromise
+
+- ##Architecture diagram
+![Architecture](docs/architecure.png)
