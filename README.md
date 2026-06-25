@@ -33,7 +33,7 @@ Web Dashboard
 ### Dashboard
 
 ![Dashboard](screenshots/dashboard.jpeg)
-![dashboard](screenshots/dashboard2.jpeg)
+![Dashboard](screenshots/dashboard2.jpeg)
 
 ### Threat Detection
 
