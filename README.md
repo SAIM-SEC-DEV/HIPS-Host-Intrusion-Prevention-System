@@ -19,16 +19,6 @@ Enterprise-style Host Intrusion Prevention System featuring file integrity monit
 
 ## Architecture
 
-Windows Endpoint
-    ↓
-Java Monitoring Agent
-    ↓
-PHP REST API
-    ↓
-MySQL Database
-    ↓
-Web Dashboard
-
 ![diagram](docs/architecture.png)
 
 ## Screenshots
