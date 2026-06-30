@@ -35,6 +35,6 @@ Enterprise-style Host Intrusion Prevention System featuring file integrity monit
 ### Agent
 ![AGENT](screenshots/Agent.jpeg)
 
-### SETUP Guide
+### Setup Guide
 📖 
 [View Setup](https://saim-sec-dev.github.io/HIPS-Host-Intrusion-Prevention-System/)
