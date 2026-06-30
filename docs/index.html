@@ -34,6 +34,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 1.7;
+    overflow-x: hidden;
   }
 
   body::before {
@@ -51,6 +52,15 @@
   }
   .orb-1 { top: -250px; left: -250px; }
   .orb-2 { bottom: -250px; right: -250px; }
+
+  /* ── 3D WIREFRAME BACKGROUND ── */
+  #bg3d {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+  }
 
   /* ── HEADER ── */
   header {
@@ -230,6 +240,7 @@
     margin-bottom: 22px;
     padding-bottom: 22px;
     border-bottom: 1px solid rgba(43,37,69,.5);
+    scroll-margin-top: 80px;
   }
   .install-step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 
@@ -244,6 +255,12 @@
     display: flex; align-items: center; justify-content: center;
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     color: var(--purple); font-weight: 600; flex-shrink: 0;
+    transition: background .25s, color .25s, box-shadow .25s;
+  }
+  .step-circle.done {
+    background: var(--purple);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(155,93,229,.6);
   }
 
   .step-line {
@@ -441,16 +458,116 @@
     position: relative; z-index: 1;
   }
 
+  /* ── STEP ACTIONS (checkbox + next button) ── */
+  .step-action {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .step-check-label {
+    display: inline-flex; align-items: center; gap: 9px;
+    cursor: pointer;
+    font-size: 12.5px; color: var(--muted);
+    user-select: none;
+  }
+
+  .step-checkbox {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; flex-shrink: 0;
+    border: 1.5px solid var(--border); border-radius: 5px;
+    background: var(--surface2);
+    cursor: pointer;
+    position: relative;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+  }
+  .step-checkbox:hover { border-color: var(--purple-lo); }
+  .step-checkbox:checked {
+    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+    border-color: var(--purple);
+    box-shadow: 0 0 10px rgba(155,93,229,.45);
+  }
+  .step-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px; top: 1px;
+    width: 5px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .step-check-label:has(.step-checkbox:checked) { color: var(--text); }
+
+  .next-step-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 500; letter-spacing: .04em;
+    color: #fff;
+    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+    border: none; border-radius: 7px;
+    padding: 9px 16px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: opacity .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 0 0 rgba(155,93,229,0);
+    margin-left: auto;
+  }
+  .next-step-btn:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(155,93,229,.35);
+  }
+  .next-step-btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    background: var(--surface2);
+    color: var(--muted);
+  }
+
+  /* ── COMPLETION MESSAGE ── */
+  .completion-message {
+    max-width: 920px; margin: 0 auto 40px;
+    padding: 0 48px;
+    position: relative; z-index: 1;
+    display: none;
+  }
+  .completion-message.show {
+    display: block;
+    animation: completionPop .5s ease;
+  }
+  .completion-card {
+    background: linear-gradient(135deg, rgba(155,93,229,.16), rgba(61,255,160,.08));
+    border: 1px solid rgba(155,93,229,.4);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(155,93,229,.18);
+  }
+  .completion-card .big-emoji { font-size: 38px; margin-bottom: 10px; }
+  .completion-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700;
+    background: linear-gradient(120deg, #fff 30%, var(--purple-hi));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .completion-card p { color: var(--muted); font-size: 13.5px; }
+
+  @keyframes completionPop {
+    0%   { opacity: 0; transform: translateY(14px) scale(.97); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
   @media (max-width: 700px) {
-    header, .hero, .wrapper { padding-left: 20px; padding-right: 20px; }
+    header, .hero, .wrapper, .completion-message { padding-left: 20px; padding-right: 20px; }
     .options-grid { grid-template-columns: 1fr; }
     .check-grid { grid-template-columns: 1fr; }
     .script-row { grid-template-columns: 1fr; }
+    .next-step-btn { margin-left: 0; }
   }
 </style>
 </head>
 <body>
 
+<canvas id="bg3d"></canvas>
 <div class="glow-orb orb-1"></div>
 <div class="glow-orb orb-2"></div>
 
@@ -519,10 +636,42 @@
         <div class="prereq">Requires <span>Java 17+</span></div>
       </div>
 
-      <!-- Step 1 -->
-      <div class="install-step">
+      <!-- Step 1 (NEW) -->
+      <div class="install-step" id="step-1">
         <div class="step-indicator">
-          <div class="step-circle">1</div>
+          <div class="step-circle" id="step-circle-1">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h4>Copy the HIPS Project into XAMPP</h4>
+          <p>Copy the entire HIPS project folder (the folder containing the dashboard, API, and related files) into your XAMPP <span class="ic">htdocs</span> directory.</p>
+          <pre data-lang="structure"><span class="hl-dir">XAMPP/</span>
+└── <span class="hl-dir">htdocs/</span>
+    └── <span class="hl-path">hips/</span>
+        ├── <span class="hl-val">dashboard/</span>
+        ├── <span class="hl-val">api/</span>
+        ├── <span class="hl-val">config/</span>
+        ├── <span class="hl-val">agent/</span>
+        └── <span class="hl-cmt">...</span></pre>
+          <div class="callout info">
+            <span class="ico">ℹ️</span>
+            <span><strong>Why this step is needed:</strong> Apache (via XAMPP) only serves files placed inside the <span class="ic">htdocs</span> directory. Since HIPS is a PHP-based dashboard and API, the project must be placed there for Apache to serve it correctly. Otherwise, visiting <span class="ic">http://localhost/hips</span> will result in a "Page Not Found" or similar error.</span>
+          </div>
+
+          <div class="step-action">
+            <label class="step-check-label">
+              <input type="checkbox" class="step-checkbox" id="step-check-1"/>
+              I've completed this step
+            </label>
+            <button class="next-step-btn" id="step-next-1" disabled>Next Step →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 (was Step 1) -->
+      <div class="install-step" id="step-2">
+        <div class="step-indicator">
+          <div class="step-circle" id="step-circle-2">2</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
@@ -533,13 +682,21 @@
             <span class="ico">✅</span>
             <span>This script handles Apache, MySQL, and HIPS dashboard startup in a single step.</span>
           </div>
+
+          <div class="step-action">
+            <label class="step-check-label">
+              <input type="checkbox" class="step-checkbox" id="step-check-2"/>
+              I've completed this step
+            </label>
+            <button class="next-step-btn" id="step-next-2" disabled>Next Step →</button>
+          </div>
         </div>
       </div>
 
-      <!-- Step 2 -->
-      <div class="install-step">
+      <!-- Step 3 (was Step 2) -->
+      <div class="install-step" id="step-3">
         <div class="step-indicator">
-          <div class="step-circle">2</div>
+          <div class="step-circle" id="step-circle-3">3</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
@@ -559,31 +716,54 @@
             <span class="ico">ℹ️</span>
             <span>Generate a UUID at <a href="https://www.uuidgenerator.net" target="_blank">uuidgenerator.net</a> — each endpoint must have a unique value.</span>
           </div>
+
+          <div class="step-action">
+            <label class="step-check-label">
+              <input type="checkbox" class="step-checkbox" id="step-check-3"/>
+              I've completed this step
+            </label>
+            <button class="next-step-btn" id="step-next-3" disabled>Next Step →</button>
+          </div>
         </div>
       </div>
 
-      <!-- Step 3 -->
-      <div class="install-step">
+      <!-- Step 4 (was Step 3) -->
+      <div class="install-step" id="step-4">
         <div class="step-indicator">
-          <div class="step-circle">3</div>
+          <div class="step-circle" id="step-circle-4">4</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
           <h4>Start the Agent</h4>
           <pre data-lang="bat"><span class="hl-cmd">run-agent.bat</span></pre>
           <p style="margin-top:8px">The agent will connect to the server and begin endpoint monitoring.</p>
+
+          <div class="step-action">
+            <label class="step-check-label">
+              <input type="checkbox" class="step-checkbox" id="step-check-4"/>
+              I've completed this step
+            </label>
+            <button class="next-step-btn" id="step-next-4" disabled>Next Step →</button>
+          </div>
         </div>
       </div>
 
-      <!-- Step 4 -->
-      <div class="install-step">
+      <!-- Step 5 (was Step 4) -->
+      <div class="install-step" id="step-5">
         <div class="step-indicator">
-          <div class="step-circle">4</div>
+          <div class="step-circle" id="step-circle-5">5</div>
         </div>
         <div class="step-content">
           <h4>Open the Dashboard</h4>
           <pre data-lang="url"><span class="hl-cmd">http://localhost/hips/dashboard</span></pre>
           <p style="margin-top:8px">Your registered agent should appear as <strong style="color:var(--green)">Online</strong>.</p>
+
+          <div class="step-action">
+            <label class="step-check-label">
+              <input type="checkbox" class="step-checkbox" id="step-check-5"/>
+              I've completed this step
+            </label>
+          </div>
         </div>
       </div>
 
@@ -854,9 +1034,212 @@
 
 </div><!-- /wrapper -->
 
+<!-- ── SETUP COMPLETION MESSAGE (shown via JS) ── -->
+<div class="completion-message" id="completion-message">
+  <div class="completion-card">
+    <div class="big-emoji">🎉</div>
+    <h3>Setup Completed 🎉</h3>
+    <p>You've finished all installation steps. HIPS is ready to monitor your endpoint.</p>
+  </div>
+</div>
+
 <footer>
   HIPS — Host Intrusion Prevention System &nbsp;·&nbsp; SETUP Guide v1.0 &nbsp;·&nbsp; MIT License
 </footer>
+
+<script>
+(function () {
+  /* ════════════════════════════════════════════
+     STEP CHECKBOX / NEXT-STEP BUTTON LOGIC
+  ════════════════════════════════════════════ */
+  var TOTAL_STEPS = 5;
+
+  for (var i = 1; i <= TOTAL_STEPS; i++) {
+    (function (idx) {
+      var checkbox = document.getElementById('step-check-' + idx);
+      var nextBtn = document.getElementById('step-next-' + idx);
+      var circle = document.getElementById('step-circle-' + idx);
+
+      if (!checkbox) return;
+
+      checkbox.addEventListener('change', function () {
+        if (circle) circle.classList.toggle('done', checkbox.checked);
+
+        if (nextBtn) {
+          nextBtn.disabled = !checkbox.checked;
+        }
+
+        // Final step: checking the box shows the completion message
+        if (idx === TOTAL_STEPS) {
+          var completion = document.getElementById('completion-message');
+          if (checkbox.checked) {
+            completion.classList.add('show');
+            completion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            completion.classList.remove('show');
+          }
+        }
+      });
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          var nextStep = document.getElementById('step-' + (idx + 1));
+          if (nextStep) {
+            nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+    })(i);
+  }
+
+  /* ════════════════════════════════════════════
+     "ALIVE" 3D WIREFRAME BACKGROUND
+     Pure canvas + native JS, no external libraries.
+     Shapes idle-rotate continuously and spin
+     faster/differently in response to scroll.
+  ════════════════════════════════════════════ */
+  var canvas = document.getElementById('bg3d');
+  var ctx = canvas.getContext('2d');
+  var W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function makeCube(size) {
+    var pts = [];
+    [-1, 1].forEach(function (x) {
+      [-1, 1].forEach(function (y) {
+        [-1, 1].forEach(function (z) {
+          pts.push([x * size, y * size, z * size]);
+        });
+      });
+    });
+    var edges = [];
+    for (var a = 0; a < pts.length; a++) {
+      for (var b = a + 1; b < pts.length; b++) {
+        var diff = 0;
+        for (var k = 0; k < 3; k++) if (pts[a][k] !== pts[b][k]) diff++;
+        if (diff === 1) edges.push([a, b]);
+      }
+    }
+    return { points: pts, edges: edges };
+  }
+
+  function makeOcta(size) {
+    var pts = [
+      [size, 0, 0], [-size, 0, 0],
+      [0, size, 0], [0, -size, 0],
+      [0, 0, size], [0, 0, -size]
+    ];
+    var skip = { '0-1': 1, '2-3': 1, '4-5': 1 };
+    var edges = [];
+    for (var a = 0; a < pts.length; a++) {
+      for (var b = a + 1; b < pts.length; b++) {
+        if (!skip[a + '-' + b]) edges.push([a, b]);
+      }
+    }
+    return { points: pts, edges: edges };
+  }
+
+  function makePyramid(size) {
+    var pts = [
+      [0, -size, 0],
+      [-size, size, -size], [size, size, -size],
+      [size, size, size], [-size, size, size]
+    ];
+    var edges = [
+      [0, 1], [0, 2], [0, 3], [0, 4],
+      [1, 2], [2, 3], [3, 4], [4, 1]
+    ];
+    return { points: pts, edges: edges };
+  }
+
+  var shapes = [
+    { geo: makeCube(64), xR: 0.13, yR: 0.18, rx: 0.3, ry: 0.6, rz: 0.1,
+      base: { x: 0.0007, y: 0.0011, z: 0.0004 }, color: 'rgba(155,93,229,0.30)' },
+    { geo: makeOcta(58), xR: 0.87, yR: 0.66, rx: 0.6, ry: 0.2, rz: 0.4,
+      base: { x: 0.0009, y: 0.0006, z: 0.0008 }, color: 'rgba(199,125,255,0.22)' },
+    { geo: makeCube(46), xR: 0.78, yR: 0.14, rx: 0.2, ry: 0.4, rz: 0.7,
+      base: { x: 0.0005, y: 0.0008, z: 0.0005 }, color: 'rgba(61,255,160,0.16)' },
+    { geo: makePyramid(50), xR: 0.07, yR: 0.82, rx: 0.5, ry: 0.3, rz: 0.2,
+      base: { x: 0.0006, y: 0.0007, z: 0.0006 }, color: 'rgba(155,93,229,0.22)' },
+    { geo: makeOcta(36), xR: 0.50, yR: 0.92, rx: 0.4, ry: 0.5, rz: 0.3,
+      base: { x: 0.0008, y: 0.0005, z: 0.0009 }, color: 'rgba(199,125,255,0.14)' }
+  ];
+
+  function rotatePoint(p, rx, ry, rz) {
+    var x = p[0], y = p[1], z = p[2];
+
+    var cx = Math.cos(rx), sx = Math.sin(rx);
+    var y1 = y * cx - z * sx, z1 = y * sx + z * cx;
+    y = y1; z = z1;
+
+    var cy = Math.cos(ry), sy = Math.sin(ry);
+    var x1 = x * cy + z * sy, z2 = -x * sy + z * cy;
+    x = x1; z = z2;
+
+    var cz = Math.cos(rz), sz = Math.sin(rz);
+    var x2 = x * cz - y * sz, y2 = x * sz + y * cz;
+    x = x2; y = y2;
+
+    return [x, y, z];
+  }
+
+  function project(p) {
+    var fov = 280, viewerZ = 560;
+    var factor = fov / (viewerZ - p[2]);
+    return [p[0] * factor, p[1] * factor];
+  }
+
+  var lastScrollY = window.scrollY || 0;
+  var scrollVelocity = 0;
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+
+    var currentScroll = window.scrollY || window.pageYOffset || 0;
+    var delta = currentScroll - lastScrollY;
+    lastScrollY = currentScroll;
+    // smooth/decay the scroll velocity so motion eases out
+    scrollVelocity = scrollVelocity * 0.9 + delta * 0.1;
+
+    var scrollBoost = scrollVelocity * 0.0014;
+
+    shapes.forEach(function (shape) {
+      shape.rx += shape.base.x + scrollBoost * 0.6;
+      shape.ry += shape.base.y + scrollBoost;
+      shape.rz += shape.base.z + scrollBoost * 0.4;
+
+      var originX = shape.xR * W;
+      var originY = shape.yR * H;
+
+      var projected = shape.geo.points.map(function (p) {
+        var rp = rotatePoint(p, shape.rx, shape.ry, shape.rz);
+        var pr = project(rp);
+        return [originX + pr[0], originY + pr[1]];
+      });
+
+      ctx.strokeStyle = shape.color;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      shape.geo.edges.forEach(function (edge) {
+        var p1 = projected[edge[0]], p2 = projected[edge[1]];
+        ctx.moveTo(p1[0], p1[1]);
+        ctx.lineTo(p2[0], p2[1]);
+      });
+      ctx.stroke();
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
+</script>
 
 </body>
 </html>
