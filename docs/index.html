@@ -636,15 +636,15 @@
         <div class="prereq">Requires <span>Java 17+</span></div>
       </div>
 
-      <!-- Step 1 (NEW) -->
+      <!-- Step 1: Copy the HIPS Project into XAMPP -->
       <div class="install-step" id="step-1">
         <div class="step-indicator">
           <div class="step-circle" id="step-circle-1">1</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
-          <h4>Copy the hips.zip Project into XAMPP</h4>
-          <p>Copy the entire hips.zip project folder (the folder containing the dashboard, API, and related files) into your XAMPP <span class="ic">htdocs</span> directory.</p>
+          <h4>Copy the HIPS Project into XAMPP</h4>
+          <p>Copy the entire HIPS project folder (the folder containing the dashboard, API, and related files) into your XAMPP <span class="ic">htdocs</span> directory.</p>
           <pre data-lang="structure"><span class="hl-dir">XAMPP/</span>
 └── <span class="hl-dir">htdocs/</span>
     └── <span class="hl-path">hips/</span>
@@ -668,35 +668,10 @@
         </div>
       </div>
 
-      <!-- Step 2 -->
+      <!-- Step 2: Configure the Agent (was Step 3) -->
       <div class="install-step" id="step-2">
         <div class="step-indicator">
           <div class="step-circle" id="step-circle-2">2</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-content">
-          <h4>Start the Server</h4>
-          <p>Run the startup script from the project root. This starts Apache, MySQL, and initialises the HIPS server automatically.</p>
-          <pre data-lang="bat"><span class="hl-cmd">start-hips-server.bat</span></pre>
-          <div class="callout tip">
-            <span class="ico">✅</span>
-            <span>This script handles Apache, MySQL, and HIPS dashboard startup in a single step.</span>
-          </div>
-
-          <div class="step-action">
-            <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-2"/>
-              I've completed this step
-            </label>
-            <button class="next-step-btn" id="step-next-2" disabled>Next Step →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="install-step" id="step-3">
-        <div class="step-indicator">
-          <div class="step-circle" id="step-circle-3">3</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
@@ -719,18 +694,18 @@
 
           <div class="step-action">
             <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-3"/>
+              <input type="checkbox" class="step-checkbox" id="step-check-2"/>
               I've completed this step
             </label>
-            <button class="next-step-btn" id="step-next-3" disabled>Next Step →</button>
+            <button class="next-step-btn" id="step-next-2" disabled>Next Step →</button>
           </div>
         </div>
       </div>
 
-      <!-- Step 4 -->
-      <div class="install-step" id="step-4">
+      <!-- Step 3: Start the Agent (was Step 4) -->
+      <div class="install-step" id="step-3">
         <div class="step-indicator">
-          <div class="step-circle" id="step-circle-4">4</div>
+          <div class="step-circle" id="step-circle-3">3</div>
           <div class="step-line"></div>
         </div>
         <div class="step-content">
@@ -740,27 +715,31 @@
 
           <div class="step-action">
             <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-4"/>
+              <input type="checkbox" class="step-checkbox" id="step-check-3"/>
               I've completed this step
             </label>
-            <button class="next-step-btn" id="step-next-4" disabled>Next Step →</button>
+            <button class="next-step-btn" id="step-next-3" disabled>Next Step →</button>
           </div>
         </div>
       </div>
 
-      <!-- Step 5 -->
-      <div class="install-step" id="step-5">
+      <!-- Step 4: Start the Server (was Step 2) — final step -->
+      <div class="install-step" id="step-4">
         <div class="step-indicator">
-          <div class="step-circle" id="step-circle-5">5</div>
+          <div class="step-circle" id="step-circle-4">4</div>
         </div>
         <div class="step-content">
-          <h4>Open the Dashboard</h4>
-          <pre data-lang="url"><span class="hl-cmd">http://localhost/hips/dashboard</span></pre>
-          <p style="margin-top:8px">Your registered agent should appear as <strong style="color:var(--green)">Online</strong>.</p>
+          <h4>Start the Server</h4>
+          <p>Run the startup script from the project root. This starts Apache, MySQL, and initialises the HIPS server automatically.</p>
+          <pre data-lang="bat"><span class="hl-cmd">start-hips-server.bat</span></pre>
+          <div class="callout tip">
+            <span class="ico">✅</span>
+            <span>This script handles Apache, MySQL, and HIPS dashboard startup in a single step.</span>
+          </div>
 
           <div class="step-action">
             <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-5"/>
+              <input type="checkbox" class="step-checkbox" id="step-check-4"/>
               I've completed this step
             </label>
           </div>
@@ -1052,7 +1031,7 @@
   /* ════════════════════════════════════════════
      STEP CHECKBOX / NEXT-STEP BUTTON LOGIC
   ════════════════════════════════════════════ */
-  var TOTAL_STEPS = 5;
+  var TOTAL_STEPS = 4;
 
   for (var i = 1; i <= TOTAL_STEPS; i++) {
     (function (idx) {
