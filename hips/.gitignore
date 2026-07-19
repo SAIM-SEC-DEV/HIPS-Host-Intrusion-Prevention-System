@@ -1,0 +1,45 @@
+# ============================================================
+# HIPS-OOP Git Ignore Configuration
+# ============================================================
+
+# ── Compiled Java Classes & Binaries ──────────────────────────
+agent/bin/
+**/*.class
+
+# ── Build & Distribution Artifacts ───────────────────────────
+dist/
+.dist/
+*.zip
+*.rar
+*.tar.gz
+
+# ── Local System & Telemetry Logs ────────────────────────────
+# Local agent and network audit logs should not be uploaded as
+# they contain sensitive network and process history.
+*.log
+agent_output.log
+agent_output_retry.log
+agent_test_output.log
+hips-file-audit.log
+hips-network-audit.log
+hips-process-audit.log
+hips-registry-audit.log
+
+# ── Local Configuration & Secrets ────────────────────────────
+# Ignore active runtime configuration. The template properties
+# file 'hips-agent.properties.example' should be used instead.
+hips-agent.properties
+baseline_checkpoint.json
+
+# ── OS and IDE Temporary Files ───────────────────────────────
+.vs/
+.idea/
+*.suo
+*.user
+Thumbs.db
+desktop.ini
+.DS_Store
+query
+discovery-launcher-temp.bat
+hips-watchdog-temp.ps1
+~$*

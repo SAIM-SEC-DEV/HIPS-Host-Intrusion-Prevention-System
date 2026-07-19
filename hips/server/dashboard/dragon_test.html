@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dragon Test</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/style.css?v=5.1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>body{margin:0;background:#030508;overflow:hidden;}</style>
+</head>
+<body>
+<div id="hipsIntro" style="position:fixed;inset:0;z-index:9999;background:#030508;display:block;overflow:hidden;">
+    <canvas id="introCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+    <svg id="introDragon" viewBox="0 0 320 280" style="position:absolute;width:340px;height:300px;bottom:-350px;right:-350px;filter:drop-shadow(0 0 30px rgba(220,38,38,0.6));z-index:2;will-change:transform;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="dgScale" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a0a0a"/><stop offset="100%" stop-color="#0d0d1a"/></linearGradient>
+            <linearGradient id="dgVein" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#7f1d1d"/></linearGradient>
+            <radialGradient id="dgChest"><stop offset="0%" stop-color="#fff" stop-opacity="0.9"/><stop offset="40%" stop-color="#f97316" stop-opacity="0.6"/><stop offset="100%" stop-color="#dc2626" stop-opacity="0"/></radialGradient>
+            <radialGradient id="dgEye"><stop offset="0%" stop-color="#fbbf24"/><stop offset="60%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#dc2626"/></radialGradient>
+        </defs>
+        <path d="M140,130 L60,30 L90,15 L120,25 L140,8 L155,20 L150,55 L145,90Z" fill="#12001e" stroke="#5b1a1a" stroke-width="0.8" opacity="0.7"/>
+        <path d="M140,130 L75,35 M140,130 L105,22 M140,130 L135,15" stroke="#6b2020" stroke-width="0.6" opacity="0.5"/>
+        <path d="M155,125 L220,25 L248,12 L270,22 L280,45 L265,80 L235,110Z" fill="#12001e" stroke="#5b1a1a" stroke-width="0.8"/>
+        <path d="M155,125 L230,30 M155,125 L255,20 M155,125 L272,38" stroke="url(#dgVein)" stroke-width="0.8" opacity="0.7"/>
+        <path d="M60,30 L55,25 L62,28 M90,15 L88,10 L93,14 M270,22 L275,17 L272,24 M280,45 L286,42 L281,48" stroke="#3a1010" stroke-width="0.5" fill="none"/>
+        <path d="M120,120 Q135,100 155,110 Q175,95 180,115 Q190,130 182,155 Q175,180 160,195 Q140,205 125,195 Q110,178 108,155 Q107,135 120,120Z" fill="url(#dgScale)" stroke="#4a1515" stroke-width="1"/>
+        <path d="M130,130 Q140,125 150,130 M125,145 Q138,140 152,145 M128,160 Q142,155 155,160 M133,175 Q145,170 157,175" stroke="#2a0a0a" stroke-width="0.5" fill="none" opacity="0.6"/>
+        <path d="M125,118 Q110,95 100,75 Q95,60 92,50" fill="none" stroke="url(#dgScale)" stroke-width="18" stroke-linecap="round"/>
+        <path d="M125,118 Q110,95 100,75 Q95,60 92,50" fill="none" stroke="#4a1515" stroke-width="0.8"/>
+        <path d="M92,50 Q82,40 70,36 Q58,32 48,38 L32,44 Q38,48 48,50 Q65,55 80,58 Q90,60 92,50Z" fill="url(#dgScale)" stroke="#4a1515" stroke-width="0.8"/>
+        <path d="M48,38 Q38,34 28,36 L18,42 Q25,46 32,44Z" fill="#0d0a15" stroke="#4a1515" stroke-width="0.6"/>
+        <path d="M30,44 L27,54 L32,46 M38,42 L36,50 L40,44 M24,42 L20,52 L26,44" fill="#1a1525" stroke="#6b3030" stroke-width="0.4"/>
+        <path d="M48,50 Q36,54 25,50 L18,42 Q22,48 30,52 Q42,56 48,50Z" fill="#080510" stroke="#4a1515" stroke-width="0.5"/>
+        <path d="M72,32 Q82,16 98,6" fill="none" stroke="#2d1045" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M78,38 Q86,24 96,16" fill="none" stroke="#2d1045" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M80,22 L83,25 M88,14 L91,17" stroke="#1a0830" stroke-width="0.5"/>
+        <ellipse cx="65" cy="42" rx="5" ry="3.5" fill="url(#dgEye)" id="dragonEyeEl"/>
+        <ellipse cx="64" cy="42" rx="1.5" ry="3" fill="#000"/>
+        <path d="M95,48 L88,32 M100,55 L95,40 M107,65 L103,50 M113,78 L110,62 M120,90 L118,76 M128,102 L127,88 M135,112 L135,100" stroke="#4c1d95" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M175,180 Q200,200 225,210 Q250,218 270,212 Q285,205 290,192 Q288,185 280,188 Q268,198 248,200 Q225,200 200,190 Q180,180 175,180Z" fill="url(#dgScale)" stroke="#4a1515" stroke-width="0.6"/>
+        <path d="M290,192 L298,186 L292,195 L300,190 L293,198" fill="#2d1045" stroke="#4c1d95" stroke-width="0.5"/>
+        <ellipse id="chestGlow" cx="150" cy="145" rx="30" ry="40" fill="url(#dgChest)" opacity="0"/>
+    </svg>
+    <div id="hipsText" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:18vw;font-weight:900;color:transparent;z-index:3;opacity:0;letter-spacing:0.05em;pointer-events:none;
+        background:linear-gradient(180deg,#fff 0%,#f97316 40%,#dc2626 70%,#7f1d1d 100%);
+        -webkit-background-clip:text;background-clip:text;
+        text-shadow:0 0 80px rgba(220,38,38,0.8),0 0 160px rgba(249,115,22,0.4);
+        filter:drop-shadow(0 0 30px rgba(220,38,38,0.6));">HIPS</div>
+</div>
+<script>
+(function(){
+    var overlay=document.getElementById('hipsIntro');
+    var canvas=document.getElementById('introCanvas'),ctx=canvas.getContext('2d');
+    var W,H;function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+    resize();window.addEventListener('resize',resize);
+    var particles=[];
+    function Particle(x,y,type){
+        this.x=x;this.y=y;this.type=type;
+        this.vx=(Math.random()-0.5)*4;this.vy=(Math.random()-0.5)*4-2;
+        this.life=1;this.decay=0.008+Math.random()*0.015;
+        this.size=type==='ember'?1+Math.random()*3:type==='fire'?4+Math.random()*8:2+Math.random()*4;
+        this.color=type==='ember'?'rgba(249,115,22,':'rgba(220,38,38,';
+        if(type==='fire'&&Math.random()>0.6)this.color='rgba(255,255,255,';
+        if(type==='smoke')this.color='rgba(100,80,80,';
+    }
+    Particle.prototype.update=function(){
+        this.x+=this.vx;this.y+=this.vy;
+        if(this.type==='ember'){this.vy-=0.03;this.vx*=0.99;}
+        if(this.type==='fire'){this.vy-=0.08;this.size*=0.97;}
+        if(this.type==='smoke'){this.vy-=0.02;this.size*=1.005;this.vx*=0.98;}
+        this.life-=this.decay;
+    };
+    Particle.prototype.draw=function(){
+        if(this.life<=0)return;
+        ctx.beginPath();ctx.arc(this.x,this.y,Math.max(0.5,this.size*this.life),0,Math.PI*2);
+        ctx.fillStyle=this.color+(this.life*0.8)+')';ctx.fill();
+    };
+    var dragonEl=document.getElementById('introDragon');
+    var hipsText=document.getElementById('hipsText');
+    var chestGlow=document.getElementById('chestGlow');
+    var startTime=performance.now();
+    function shake(intensity){
+        var ox=(Math.random()-0.5)*intensity,oy=(Math.random()-0.5)*intensity;
+        overlay.style.transform='translate('+ox+'px,'+oy+'px)';
+    }
+    function getDragonPos(t){
+        if(t<600)return{x:W+100-((W*0.6+100)*(t/600)),y:H+100-((H*0.5+100)*(t/600)),s:0.3+0.7*(t/600),r:15*(1-t/600)};
+        if(t<1800){var p=(t-600)/1200;return{x:W*0.4-p*W*0.05,y:H*0.5-p*H*0.1,s:1+p*0.15,r:-5*p};}
+        if(t<2800){var p=(t-1800)/1000;return{x:W*0.35,y:H*0.4,s:1.15+p*0.05,r:-5};}
+        if(t<3600){var p=(t-2800)/800;return{x:W*0.35,y:H*0.4,s:1.2-p*0.1,r:-5+p*3};}
+        if(t<5400){var p=(t-4200)/1200;p=Math.max(0,p);return{x:W*0.35+p*W*0.6,y:H*0.4+p*H*0.6,s:1.1-p*0.5,r:-2+p*20};}
+        return{x:W+200,y:H+200,s:0.3,r:20};
+    }
+    var flashAlpha=0;
+    function animate(now){
+        var t=now-startTime;
+        ctx.clearRect(0,0,W,H);
+        ctx.fillStyle='rgba(3,5,8,'+Math.min(1,t/500)+')';ctx.fillRect(0,0,W,H);
+        if(t<600){shake(8*(1-t/600));}else{overlay.style.transform='none';}
+        var dp=getDragonPos(t);
+        dragonEl.style.left=(dp.x-170)+'px';
+        dragonEl.style.top=(dp.y-150)+'px';
+        dragonEl.style.transform='scale('+dp.s+') rotate('+dp.r+'deg)';
+        if(t>300&&t<5400){for(var i=0;i<2;i++){particles.push(new Particle(dp.x+Math.random()*40-20,dp.y+Math.random()*40+60,'ember'));}}
+        if(t>1800&&t<3600){var cp=Math.min(1,(t-1800)/1000);chestGlow.setAttribute('opacity',cp*0.9);for(var i=0;i<Math.floor(cp*5);i++){var a=Math.random()*Math.PI*2,r=30+Math.random()*20;particles.push(new Particle(dp.x+Math.cos(a)*r,dp.y+Math.sin(a)*r,'ember'));}}
+        if(t>2800&&t<3600){var fp=(t-2800)/800;shake(12*fp);for(var i=0;i<20;i++){var fx=dp.x-40,fy=dp.y-20;var p=new Particle(fx,fy,'fire');p.vx=(W/2-fx)*0.015+Math.random()*6-3;p.vy=(H/2-fy)*0.015+Math.random()*6-3;p.size=6+Math.random()*12;p.decay=0.012;particles.push(p);}flashAlpha=Math.min(0.7,fp*1.2);}else{if(flashAlpha>0)flashAlpha*=0.9;}
+        if(t>3400&&t<6500){var tp=Math.min(1,(t-3400)/600);hipsText.style.opacity=tp;if(t>3600&&t<4200){var pulse=1+Math.sin((t-3600)*0.01)*0.03;hipsText.style.transform='translate(-50%,-50%) scale('+pulse+')';}}
+        if(t>4200&&t<5400){var rp=(t-4200)/1200;dragonEl.style.opacity=1-rp;for(var i=0;i<3;i++){particles.push(new Particle(dp.x+Math.random()*60-30,dp.y+Math.random()*40,'smoke'));}}
+        if(t>5400)dragonEl.style.opacity=0;
+        if(t>5400){var fo=(t-5400)/1100;hipsText.style.opacity=Math.max(0,1-fo*1.5);overlay.style.opacity=Math.max(0,1-fo);}
+        for(var i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].life<=0)particles.splice(i,1);}
+        if(flashAlpha>0.01){ctx.fillStyle='rgba(255,240,220,'+flashAlpha+')';ctx.fillRect(0,0,W,H);}
+        var vg=ctx.createRadialGradient(W/2,H/2,H*0.3,W/2,H/2,H*0.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,0.7)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+        if(t<6600){requestAnimationFrame(animate);}
+        else{document.body.style.background='#0a0f1e';overlay.style.display='none';document.title='Dragon Test - DONE';}
+    }
+    requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>

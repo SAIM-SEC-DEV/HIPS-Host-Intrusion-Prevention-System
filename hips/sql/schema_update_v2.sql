@@ -1,0 +1,15 @@
+-- ============================================================
+-- HIPS — Schema Update v2 (DEPRECATED)
+-- ============================================================
+-- THIS FILE IS DEPRECATED.
+-- All v2 changes (process/registry monitoring, MITRE ATT&CK 
+-- columns, threat intel settings) have been merged into the
+-- unified schema.sql file.
+--
+-- For new installations, use schema.sql only.
+--
+-- This file is kept for backward compatibility documentation
+-- purposes. It can be safely deleted.
+-- ============================================================
+
+-- Nothing to execute — see sql/schema.sql

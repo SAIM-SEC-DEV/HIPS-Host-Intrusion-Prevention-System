@@ -1,4 +1,0 @@
-server.url=http://localhost/hips
-auth.token=YOUR_TOKEN_HERE
-agent.uuid=GENERATE_NEW_UUID
-watch.directories=C:\Path\To\Monitor

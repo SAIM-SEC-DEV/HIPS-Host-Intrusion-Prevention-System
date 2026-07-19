@@ -1,0 +1,57 @@
+# ============================================================
+# HIPS-OOP Agent Configuration Template
+# ============================================================
+# INSTRUCTIONS:
+# 1. Rename this file to 'hips-agent.properties'
+# 2. Fill in the server.url, agent.owner, and auth.token
+# 3. Configure local paths for Yara and Osquery as needed
+# ============================================================
+
+# ── Server Connection Settings ───────────────────────────────
+# The URL of your centralized HIPS Management Server api
+server.url=http://localhost/hips
+
+# The unique authorization token for this agent (obtain from the server console)
+auth.token=YOUR_AGENT_AUTHENTICATION_TOKEN_HERE
+
+# ── Agent Identification ─────────────────────────────────────
+# Unique ID assigned by the server (default: 0 for registration)
+agent.id=0
+agent.owner=YOUR_NAME_HERE
+agent.uuid=
+
+# ── System Telemetry Intervals ───────────────────────────────
+# Interval in seconds to send heartbeat check-ins
+heartbeat.interval=30
+# Interval in seconds to poll for file/network/process changes
+poll.interval=10
+
+# ── Third-Party Security Feeds (Optional) ────────────────────
+# API keys for scanning threats via AbuseIPDB and VirusTotal
+abuseipdb.api.key=
+virustotal.api.key=
+
+# ── Monitoring Rules ─────────────────────────────────────────
+# Comma-separated paths of directories to monitor for FIM (File Integrity Monitoring)
+watch.directories=C:\Windows\System32,C:\Users
+
+# Comma-separated list of process names to exclude from behavior analysis
+process.whitelist=
+
+# Comma-separated whitelist of trusted IP addresses
+whitelist.ips=127.0.0.1,8.8.8.8
+
+# ── Threat Scanning Utilities ───────────────────────────────
+# Path to the Yara binary and rules file for malware scanning
+yara.binary.path=C:\HIPS\bin\yara64.exe
+yara.rules.path=rules\starter_rules.yar
+
+# OSQuery integration settings
+osquery.enabled=false
+osquery.binary.path=C:\Program Files\osquery\osqueryi.exe
+osquery.timeout.sec=15
+
+# ── Baseline Status ──────────────────────────────────────────
+# Managed by the agent automatically during baseline creation phase
+baseline.start=
+baseline.complete=false
