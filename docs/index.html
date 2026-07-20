@@ -667,7 +667,7 @@ SOURCE database/schema.sql;</pre>
           </div>
         </div>
 
-        <!-- STEP 4: Recompile Agent (new) -->
+        <!-- STEP 4: Recompile Agent -->
         <div class="install-step" id="step-4">
           <div class="step-indicator">
             <div class="step-circle" id="step-circle-4">4</div>
@@ -680,6 +680,10 @@ SOURCE database/schema.sql;</pre>
             <div class="callout tip">
               <span class="ico">💡</span>
               <span>Recompilation updates the agent binary with your settings before execution.</span>
+            </div>
+            <div class="callout warn">
+              <span class="ico">⚠️</span>
+              <span>The generated <span class="ic">dist/</span> folder is intended for portable deployment. During the tested setup, the agent is executed from the original project using <span class="ic">run-agent.bat</span>, not from <span class="ic">dist/</span>.</span>
             </div>
             <div class="step-action">
               <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-4" /> I've completed this step</label>
@@ -712,4 +716,338 @@ SOURCE database/schema.sql;</pre>
         <!-- STEP 6: Run Agent -->
         <div class="install-step" id="step-6">
           <div class="step-indicator">
-            <div class="step-circle" id="step-circle-6">
+            <div class="step-circle" id="step-circle-6">6</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h4>Run the Agent</h4>
+            <p>Start the endpoint monitoring agent from the original project directory.</p>
+            <pre data-lang="bat"><span class="hl-cmd">run-agent.bat</span></pre>
+            <div class="callout tip">
+              <span class="ico">✅</span>
+              <span>This script uses the compiled agent from the project root — not the <span class="ic">dist/</span> folder — and begins monitoring according to your <span class="ic">hips-agent.properties</span>.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-6" /> I've completed this step</label>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /path-body -->
+    </div><!-- /path-block -->
+
+    <!-- ── CONFIGURATION REFERENCE ── (unchanged structure, URLs corrected) -->
+    <div class="section-label">Configuration Reference</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+      <table class="config-table">
+        <thead><tr><th>Property</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>server.url</td><td>URL of the HIPS dashboard server</td><td><span class="ic">http://192.168.1.50/server</span></td></tr>
+          <tr><td>auth.token</td><td>Automatically generated shared secret — do not modify</td><td><span class="ic">(auto-generated)</span></td></tr>
+          <tr><td>agent.uuid</td><td>Unique machine identifier (generate at <a href="https://www.uuidgenerator.net" target="_blank">uuidgenerator.net</a>)</td><td><span class="ic">1f32f7d8-7c8c-4f8c-a431-c3f1dbe93c77</span></td></tr>
+          <tr><td>agent.owner</td><td>Human‑readable label shown in the dashboard</td><td><span class="ic">Finance-PC</span> · <span class="ic">SOC-Lab-01</span></td></tr>
+          <tr><td>watch.directories</td><td>Comma‑separated list of paths to monitor for file changes</td><td><span class="ic">C:\Users\John\Desktop,C:\Users\John\Documents</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:6px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--purple-hi);margin-bottom:10px;">watch.directories — Examples</div>
+      <pre data-lang="properties"><span class="hl-cmt">// Desktop only</span>
+<span class="hl-key">watch.directories</span> = <span class="hl-path">C:\Users\&lt;username&gt;\Desktop</span>
+
+<span class="hl-cmt">// Desktop + Documents</span>
+<span class="hl-key">watch.directories</span> = <span class="hl-path">C:\Users\&lt;username&gt;\Desktop,C:\Users\&lt;username&gt;\Documents</span>
+
+<span class="hl-cmt">// Custom sensitive folder</span>
+<span class="hl-key">watch.directories</span> = <span class="hl-path">D:\SensitiveData</span></pre>
+    </div>
+
+    <!-- ── INCLUDED SCRIPTS ── (descriptions updated) -->
+    <div class="section-label">Included Scripts</div>
+    <div class="scripts-grid">
+      <div class="script-row">
+        <div><div class="script-name">Start HIPS Server.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Starts Apache, MySQL, HIPS Dashboard, and Server API automatically.</div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">stop-hips-server.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Gracefully stops all HIPS server services.</div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">run-agent.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Runs the compiled monitoring agent from the original project directory (not from <span class="ic">dist/</span>).</div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">discovery-launcher-temp.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Automatic discovery launcher for agent deployment across the network.</div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">discovery-service.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Discovery service for multi‑machine deployments. Coordinates agent registration across endpoints.</div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">hips-watchdog-temp.ps1</div><div class="script-ext">.ps1 · PowerShell</div></div>
+        <div class="script-desc">Monitors running HIPS processes and auto‑recovers from crashes.<ul><li>Detects service crashes</li><li>Automatically restarts failed components</li><li>Improves overall reliability</li></ul></div>
+      </div>
+      <div class="script-row">
+        <div><div class="script-name">deploy-package.bat</div><div class="script-ext">.bat · Windows Batch</div></div>
+        <div class="script-desc">Packages a deployment‑ready distribution for additional endpoints. Output includes agent binaries, config templates, and startup scripts.</div>
+      </div>
+    </div>
+
+    <!-- ── DEFAULT CREDENTIALS ── -->
+    <div class="section-label">Default Credentials</div>
+    <div class="cred-block">
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:14px;">Used on first login only. Change immediately after setup.</p>
+      <pre data-lang="credentials"><span class="hl-key">Username:</span>  <span class="hl-val">admin</span>
+<span class="hl-key">Password:</span>  <span class="hl-val">CHANGE_ME_ON_FIRST_LOGIN</span></pre>
+      <div class="callout warn" style="margin-top:12px">
+        <span class="ico">⚠️</span>
+        <span>Change the default password immediately via <strong>Dashboard → Settings</strong>. Never leave default credentials in a production environment.</span>
+      </div>
+    </div>
+
+    <!-- ── VERIFICATION CHECKLIST (updated to match workflow) ── -->
+    <div class="section-label">Verification Checklist</div>
+    <div class="checklist-card">
+      <h3>✅ Confirm Everything Is Working</h3>
+      <div class="check-grid">
+        <div class="check-item"><div class="check-box"></div>Database created</div>
+        <div class="check-item"><div class="check-box"></div>Schema imported</div>
+        <div class="check-item"><div class="check-box"></div>Server folder copied to htdocs</div>
+        <div class="check-item"><div class="check-box"></div>Server started</div>
+        <div class="check-item"><div class="check-box"></div>Properties configured</div>
+        <div class="check-item"><div class="check-box"></div>Agent recompiled</div>
+        <div class="check-item"><div class="check-box"></div>Original run-agent.bat executed</div>
+        <div class="check-item"><div class="check-box"></div>Dashboard accessible</div>
+        <div class="check-item"><div class="check-box"></div>Agent shows Online</div>
+        <div class="check-item"><div class="check-box"></div>File monitoring working</div>
+        <div class="check-item"><div class="check-box"></div>Alerts appearing in dashboard</div>
+        <div class="check-item"><div class="check-box"></div>Admin password changed</div>
+      </div>
+      <div class="callout tip" style="margin-top:20px">
+        <span class="ico">🎉</span>
+        <span>All boxes checked? HIPS is successfully deployed and operational.</span>
+      </div>
+    </div>
+
+    <!-- ── TOPOLOGY DIAGRAM (URLs updated) ── -->
+    <div class="section-label">Multi‑Machine Topology</div>
+    <div class="topology">
+<span class="hl-dir">Server PC</span>
+│
+├── <span class="hl-val">XAMPP</span>  <span class="hl-cmt">(Apache + MySQL)</span>
+├── <span class="hl-val">MySQL</span>   <span class="hl-cmt">(hips_db)</span>
+└── <span class="hl-val">Dashboard</span> → <span class="hl-cmd">http://&lt;SERVER-IP&gt;/server/dashboard</span>
+
+<span class="hl-dir">Agent PC 1</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/server</span>
+<span class="hl-dir">Agent PC 2</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/server</span>
+<span class="hl-dir">Agent PC 3</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/server</span></div>
+    <div class="callout info" style="margin-top:14px">
+      <span class="ico">ℹ️</span>
+      <span>This section only applies to deployments with multiple monitored endpoints. Single‑computer installations can safely skip it.</span>
+    </div>
+
+  </div><!-- /wrapper -->
+
+  <!-- ── SETUP COMPLETION MESSAGE ── -->
+  <div class="completion-message" id="completion-message">
+    <div class="completion-card">
+      <div class="big-emoji">🎉</div>
+      <h3>Setup Completed 🎉</h3>
+      <p>You've finished all installation steps. HIPS is ready to monitor your endpoint.</p>
+    </div>
+  </div>
+
+  <footer>
+    HIPS — Host Intrusion Prevention System &nbsp;·&nbsp; SETUP Guide v1.0 &nbsp;·&nbsp; MIT License
+  </footer>
+
+  <script>
+    (function () {
+      /* ── STEP CHECKBOX / NEXT‑STEP LOGIC (6 steps) ── */
+      var TOTAL_STEPS = 6;
+
+      for (var i = 1; i <= TOTAL_STEPS; i++) {
+        (function (idx) {
+          var checkbox = document.getElementById('step-check-' + idx);
+          var nextBtn = document.getElementById('step-next-' + idx);
+          var circle = document.getElementById('step-circle-' + idx);
+
+          if (!checkbox) return;
+
+          checkbox.addEventListener('change', function () {
+            if (circle) circle.classList.toggle('done', checkbox.checked);
+
+            if (nextBtn) {
+              nextBtn.disabled = !checkbox.checked;
+            }
+
+            // Final step: show completion message
+            if (idx === TOTAL_STEPS) {
+              var completion = document.getElementById('completion-message');
+              if (checkbox.checked) {
+                completion.classList.add('show');
+                completion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              } else {
+                completion.classList.remove('show');
+              }
+            }
+          });
+
+          if (nextBtn) {
+            nextBtn.addEventListener('click', function () {
+              var nextStep = document.getElementById('step-' + (idx + 1));
+              if (nextStep) {
+                nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          }
+        })(i);
+      }
+
+      /* ── 3D WIREFRAME BACKGROUND (restored) ── */
+      var canvas = document.getElementById('bg3d');
+      var ctx = canvas.getContext('2d');
+      var W, H;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function makeCube(size) {
+        var pts = [];
+        [-1, 1].forEach(function (x) {
+          [-1, 1].forEach(function (y) {
+            [-1, 1].forEach(function (z) {
+              pts.push([x * size, y * size, z * size]);
+            });
+          });
+        });
+        var edges = [];
+        for (var a = 0; a < pts.length; a++) {
+          for (var b = a + 1; b < pts.length; b++) {
+            var diff = 0;
+            for (var k = 0; k < 3; k++) if (pts[a][k] !== pts[b][k]) diff++;
+            if (diff === 1) edges.push([a, b]);
+          }
+        }
+        return { points: pts, edges: edges };
+      }
+
+      function makeOcta(size) {
+        var pts = [
+          [size, 0, 0], [-size, 0, 0],
+          [0, size, 0], [0, -size, 0],
+          [0, 0, size], [0, 0, -size]
+        ];
+        var skip = { '0-1': 1, '2-3': 1, '4-5': 1 };
+        var edges = [];
+        for (var a = 0; a < pts.length; a++) {
+          for (var b = a + 1; b < pts.length; b++) {
+            if (!skip[a + '-' + b]) edges.push([a, b]);
+          }
+        }
+        return { points: pts, edges: edges };
+      }
+
+      function makePyramid(size) {
+        var pts = [
+          [0, -size, 0],
+          [-size, size, -size], [size, size, -size],
+          [size, size, size], [-size, size, size]
+        ];
+        var edges = [
+          [0, 1], [0, 2], [0, 3], [0, 4],
+          [1, 2], [2, 3], [3, 4], [4, 1]
+        ];
+        return { points: pts, edges: edges };
+      }
+
+      var shapes = [
+        { geo: makeCube(64), xR: 0.13, yR: 0.18, rx: 0.3, ry: 0.6, rz: 0.1,
+          base: { x: 0.0007, y: 0.0011, z: 0.0004 }, color: 'rgba(155,93,229,0.30)' },
+        { geo: makeOcta(58), xR: 0.87, yR: 0.66, rx: 0.6, ry: 0.2, rz: 0.4,
+          base: { x: 0.0009, y: 0.0006, z: 0.0008 }, color: 'rgba(199,125,255,0.22)' },
+        { geo: makeCube(46), xR: 0.78, yR: 0.14, rx: 0.2, ry: 0.4, rz: 0.7,
+          base: { x: 0.0005, y: 0.0008, z: 0.0005 }, color: 'rgba(61,255,160,0.16)' },
+        { geo: makePyramid(50), xR: 0.07, yR: 0.82, rx: 0.5, ry: 0.3, rz: 0.2,
+          base: { x: 0.0006, y: 0.0007, z: 0.0006 }, color: 'rgba(155,93,229,0.22)' },
+        { geo: makeOcta(36), xR: 0.50, yR: 0.92, rx: 0.4, ry: 0.5, rz: 0.3,
+          base: { x: 0.0008, y: 0.0005, z: 0.0009 }, color: 'rgba(199,125,255,0.14)' }
+      ];
+
+      function rotatePoint(p, rx, ry, rz) {
+        var x = p[0], y = p[1], z = p[2];
+
+        var cx = Math.cos(rx), sx = Math.sin(rx);
+        var y1 = y * cx - z * sx, z1 = y * sx + z * cx;
+        y = y1; z = z1;
+
+        var cy = Math.cos(ry), sy = Math.sin(ry);
+        var x1 = x * cy + z * sy, z2 = -x * sy + z * cy;
+        x = x1; z = z2;
+
+        var cz = Math.cos(rz), sz = Math.sin(rz);
+        var x2 = x * cz - y * sz, y2 = x * sz + y * cz;
+        x = x2; y = y2;
+
+        return [x, y, z];
+      }
+
+      function project(p) {
+        var fov = 280, viewerZ = 560;
+        var factor = fov / (viewerZ - p[2]);
+        return [p[0] * factor, p[1] * factor];
+      }
+
+      var lastScrollY = window.scrollY || 0;
+      var scrollVelocity = 0;
+
+      function tick() {
+        ctx.clearRect(0, 0, W, H);
+
+        var currentScroll = window.scrollY || window.pageYOffset || 0;
+        var delta = currentScroll - lastScrollY;
+        lastScrollY = currentScroll;
+        scrollVelocity = scrollVelocity * 0.9 + delta * 0.1;
+
+        var scrollBoost = scrollVelocity * 0.0014;
+
+        shapes.forEach(function (shape) {
+          shape.rx += shape.base.x + scrollBoost * 0.6;
+          shape.ry += shape.base.y + scrollBoost;
+          shape.rz += shape.base.z + scrollBoost * 0.4;
+
+          var originX = shape.xR * W;
+          var originY = shape.yR * H;
+
+          var projected = shape.geo.points.map(function (p) {
+            var rp = rotatePoint(p, shape.rx, shape.ry, shape.rz);
+            var pr = project(rp);
+            return [originX + pr[0], originY + pr[1]];
+          });
+
+          ctx.strokeStyle = shape.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          shape.geo.edges.forEach(function (edge) {
+            var p1 = projected[edge[0]], p2 = projected[edge[1]];
+            ctx.moveTo(p1[0], p1[1]);
+            ctx.lineTo(p2[0], p2[1]);
+          });
+          ctx.stroke();
+        });
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
