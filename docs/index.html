@@ -1,1224 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>HIPS – SETUP Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-  :root {
-    --bg:        #07070D;
-    --surface:   #100F1C;
-    --surface2:  #18162A;
-    --border:    #2B2545;
-    --purple:    #9B5DE5;
-    --purple-lo: #7B2FBE;
-    --purple-hi: #C77DFF;
-    --glow:      rgba(155,93,229,.15);
-    --text:      #EDE9F8;
-    --muted:     #8A80AA;
-    --code-bg:   #0D0B1A;
-    --green:     #3DFFA0;
-    --amber:     #FFB347;
-    --red:       #FF5C7A;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIPS – SETUP Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── reset & variables (unchanged) ── */
+    :root {
+      --bg:        #07070D;
+      --surface:   #100F1C;
+      --surface2:  #18162A;
+      --border:    #2B2545;
+      --purple:    #9B5DE5;
+      --purple-lo: #7B2FBE;
+      --purple-hi: #C77DFF;
+      --glow:      rgba(155,93,229,.15);
+      --text:      #EDE9F8;
+      --muted:     #8A80AA;
+      --code-bg:   #0D0B1A;
+      --green:     #3DFFA0;
+      --amber:     #FFB347;
+      --red:       #FF5C7A;
+    }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    pointer-events: none; z-index: 0;
-  }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none; z-index: 0;
+    }
 
-  .glow-orb {
-    position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
-    background: radial-gradient(circle, rgba(155,93,229,.07) 0%, transparent 70%);
-    width: 700px; height: 700px;
-  }
-  .orb-1 { top: -250px; left: -250px; }
-  .orb-2 { bottom: -250px; right: -250px; }
+    .glow-orb {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle, rgba(155,93,229,.07) 0%, transparent 70%);
+      width: 700px; height: 700px;
+    }
+    .orb-1 { top: -250px; left: -250px; }
+    .orb-2 { bottom: -250px; right: -250px; }
 
-  /* ── 3D WIREFRAME BACKGROUND ── */
-  #bg3d {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    display: block;
-  }
+    #bg3d {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      display: block;
+    }
 
-  /* ── HEADER ── */
-  header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(7,7,13,.88);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 48px; height: 58px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,7,13,.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
 
-  .logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 17px; letter-spacing: .05em;
-    display: flex; align-items: center; gap: 10px;
-  }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 17px; letter-spacing: .05em;
+      display: flex; align-items: center; gap: 10px;
+    }
 
-  .logo-badge {
-    width: 30px; height: 30px;
-    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700;
-  }
+    .logo-badge {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+    }
 
-  .header-pills { display: flex; gap: 8px; }
+    .header-pills { display: flex; gap: 8px; }
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: .04em;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid var(--border);
+      color: var(--muted); background: var(--surface);
+    }
 
-  .pill {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: .04em;
-    padding: 3px 10px; border-radius: 20px;
-    border: 1px solid var(--border);
-    color: var(--muted); background: var(--surface);
-  }
+    /* ── HERO ── */
+    .hero {
+      max-width: 920px; margin: 0 auto;
+      padding: 76px 48px 52px;
+      position: relative; z-index: 1;
+    }
 
-  /* ── HERO ── */
-  .hero {
-    max-width: 920px; margin: 0 auto;
-    padding: 76px 48px 52px;
-    position: relative; z-index: 1;
-  }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--purple-hi);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px;
+    }
+    .eyebrow::before { content:''; width:26px; height:1px; background:var(--purple-hi); }
 
-  .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--purple-hi);
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 18px;
-  }
-  .eyebrow::before { content:''; width:26px; height:1px; background:var(--purple-hi); }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 50px); font-weight: 700;
+      line-height: 1.1; letter-spacing: -.02em;
+      background: linear-gradient(120deg, #fff 40%, var(--purple-hi));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+    }
 
-  .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(32px, 5vw, 50px); font-weight: 700;
-    line-height: 1.1; letter-spacing: -.02em;
-    background: linear-gradient(120deg, #fff 40%, var(--purple-hi));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 18px;
-  }
+    .hero p { color: var(--muted); font-size: 15.5px; max-width: 540px; margin-bottom: 32px; }
 
-  .hero p { color: var(--muted); font-size: 15.5px; max-width: 540px; margin-bottom: 32px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      padding: 5px 12px; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--muted);
+    }
+    .tag .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dot-g { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-p { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+    .dot-a { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
 
-  .hero-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    /* ── WRAPPER ── */
+    .wrapper {
+      max-width: 920px; margin: 0 auto;
+      padding: 0 48px 100px;
+      position: relative; z-index: 1;
+    }
 
-  .tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    padding: 5px 12px; border-radius: 20px;
-    border: 1px solid var(--border); background: var(--surface);
-    color: var(--muted);
-  }
-  .tag .dot { width: 6px; height: 6px; border-radius: 50%; }
-  .dot-g { background: var(--green); box-shadow: 0 0 6px var(--green); }
-  .dot-p { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
-  .dot-a { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--purple);
+      display: flex; align-items: center; gap: 12px;
+      margin: 60px 0 28px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
 
-  /* ── WRAPPER ── */
-  .wrapper {
-    max-width: 920px; margin: 0 auto;
-    padding: 0 48px 100px;
-    position: relative; z-index: 1;
-  }
+    /* ── OPTION CARDS ── */
+    .options-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      margin-bottom: 40px;
+    }
+    .option-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: default;
+      transition: border-color .2s, transform .15s;
+    }
+    .option-card:hover { border-color: var(--purple-lo); transform: translateY(-2px); }
+    .option-card.recommended { border-color: var(--purple); }
+    .opt-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: .1em;
+      color: var(--purple); margin-bottom: 8px;
+    }
+    .opt-rec {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--green); background: rgba(61,255,160,.1);
+      border: 1px solid rgba(61,255,160,.25);
+      padding: 2px 8px; border-radius: 20px;
+      margin-left: 8px; vertical-align: middle;
+    }
+    .option-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px; font-weight: 600;
+      margin-bottom: 6px; color: var(--text);
+    }
+    .option-card p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 
-  /* ── SECTION LABEL ── */
-  .section-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--purple);
-    display: flex; align-items: center; gap: 12px;
-    margin: 60px 0 28px;
-  }
-  .section-label::after {
-    content: ''; flex: 1; height: 1px;
-    background: linear-gradient(to right, var(--border), transparent);
-  }
+    /* ── PATH BLOCKS ── */
+    .path-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .path-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .path-header-left { display: flex; align-items: center; gap: 12px; }
+    .path-num {
+      width: 28px; height: 28px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      color: #fff; flex-shrink: 0;
+    }
+    .path-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px; font-weight: 700; color: var(--text);
+    }
+    .path-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+    .path-body { padding: 22px 24px; }
 
-  /* ── OPTION CARDS (the 3 paths) ── */
-  .options-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    margin-bottom: 40px;
-  }
+    /* ── STEPS ── */
+    .install-step {
+      display: flex; gap: 16px;
+      margin-bottom: 22px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(43,37,69,.5);
+      scroll-margin-top: 80px;
+    }
+    .install-step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 
-  .option-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    cursor: default;
-    transition: border-color .2s, transform .15s;
-  }
-  .option-card:hover { border-color: var(--purple-lo); transform: translateY(-2px); }
-  .option-card.recommended { border-color: var(--purple); }
+    .step-indicator {
+      flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+    }
+    .step-circle {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1.5px solid var(--purple);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--purple); font-weight: 600; flex-shrink: 0;
+      transition: background .25s, color .25s, box-shadow .25s;
+    }
+    .step-circle.done {
+      background: var(--purple);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(155,93,229,.6);
+    }
+    .step-line {
+      width: 1px; flex: 1; min-height: 20px;
+      background: linear-gradient(to bottom, var(--purple), transparent);
+      margin-top: 4px;
+    }
+    .step-content { flex: 1; padding-top: 2px; }
+    .step-content h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .step-content p { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; }
 
-  .opt-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: .1em;
-    color: var(--purple); margin-bottom: 8px;
-  }
+    /* ── CODE ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--purple);
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin-top: 8px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.65;
+      color: #C8C0E8;
+      position: relative;
+    }
+    pre[data-lang]::before {
+      content: attr(data-lang);
+      position: absolute; top: 7px; right: 10px;
+      font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--purple); opacity: .55;
+    }
+    .hl-cmd   { color: var(--green); }
+    .hl-key   { color: var(--purple-hi); }
+    .hl-val   { color: #A8E6CF; }
+    .hl-cmt   { color: #3E3560; font-style: italic; }
+    .hl-path  { color: var(--amber); }
+    .hl-str   { color: #F8A4C8; }
+    .hl-dir   { color: var(--purple-hi); }
 
-  .opt-rec {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--green); background: rgba(61,255,160,.1);
-    border: 1px solid rgba(61,255,160,.25);
-    padding: 2px 8px; border-radius: 20px;
-    margin-left: 8px; vertical-align: middle;
-  }
+    .ic {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      background: var(--surface2); color: var(--purple-hi);
+      border: 1px solid var(--border);
+      padding: 1px 6px; border-radius: 4px;
+    }
 
-  .option-card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px; font-weight: 600;
-    margin-bottom: 6px; color: var(--text);
-  }
+    /* ── CALLOUTS ── */
+    .callout {
+      display: flex; gap: 11px;
+      border-radius: 8px; padding: 12px 15px;
+      margin-top: 10px; font-size: 13px;
+    }
+    .callout .ico { flex-shrink: 0; margin-top: 1px; }
+    .callout.info { background: rgba(155,93,229,.09); border: 1px solid rgba(155,93,229,.28); color: #CDB8F5; }
+    .callout.warn { background: rgba(255,179,71,.08); border: 1px solid rgba(255,179,71,.24); color: #F5D08A; }
+    .callout.tip  { background: rgba(61,255,160,.07); border: 1px solid rgba(61,255,160,.2);  color: #8AFFD0; }
 
-  .option-card p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+    /* ── PREREQS ── */
+    .prereqs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .prereq {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      padding: 4px 11px; border-radius: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .prereq span { color: var(--text); font-weight: 500; }
 
-  /* ── INSTALL PATH ── */
-  .path-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
+    /* ── CONFIG TABLE ── */
+    .config-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px; margin-top: 4px;
+    }
+    .config-table th {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--purple); font-weight: 600;
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .config-table td {
+      padding: 10px 14px; color: var(--muted);
+      border-bottom: 1px solid rgba(43,37,69,.45);
+      vertical-align: top;
+    }
+    .config-table tr:last-child td { border-bottom: none; }
+    .config-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--purple-hi);
+      white-space: nowrap;
+    }
+    .config-table td:last-child { font-size: 12px; }
 
-  .path-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
+    /* ── SCRIPTS GRID ── */
+    .scripts-grid {
+      display: grid; gap: 12px;
+    }
+    .script-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: grid; grid-template-columns: 240px 1fr;
+      gap: 16px; align-items: start;
+      transition: border-color .2s;
+    }
+    .script-row:hover { border-color: var(--purple-lo); }
+    .script-name {
+      font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+      color: var(--amber); font-weight: 500;
+    }
+    .script-ext {
+      font-size: 10px; color: var(--muted);
+      margin-top: 2px;
+    }
+    .script-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .script-desc ul { list-style: none; margin-top: 6px; }
+    .script-desc ul li {
+      display: flex; align-items: center; gap: 7px;
+      padding: 2px 0; font-size: 12.5px;
+    }
+    .script-desc ul li::before {
+      content: '▸'; color: var(--purple); font-size: 9px;
+    }
 
-  .path-header-left { display: flex; align-items: center; gap: 12px; }
+    /* ── CHECKLIST ── */
+    .checklist-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 26px 28px;
+      margin-top: 8px;
+    }
+    .checklist-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 20px; color: var(--text);
+    }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13.5px; color: var(--muted); padding: 6px 0;
+      border-bottom: 1px solid rgba(43,37,69,.4);
+    }
+    .check-box {
+      width: 17px; height: 17px; flex-shrink: 0;
+      border: 1.5px solid var(--border); border-radius: 4px;
+      background: var(--surface2);
+    }
 
-  .path-num {
-    width: 28px; height: 28px; border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
-    color: #fff; flex-shrink: 0;
-  }
+    .cred-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+    }
 
-  .path-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px; font-weight: 700; color: var(--text);
-  }
+    .topology {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--purple);
+      border-radius: 8px;
+      padding: 16px 20px; margin-top: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 2;
+      color: var(--muted);
+    }
 
-  .path-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+    a { color: var(--purple-hi); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-  .path-body { padding: 22px 24px; }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 28px 48px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--muted);
+      position: relative; z-index: 1;
+    }
 
-  /* ── STEPS INSIDE A PATH ── */
-  .install-step {
-    display: flex; gap: 16px;
-    margin-bottom: 22px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid rgba(43,37,69,.5);
-    scroll-margin-top: 80px;
-  }
-  .install-step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .step-action {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+    .step-check-label {
+      display: inline-flex; align-items: center; gap: 9px;
+      cursor: pointer;
+      font-size: 12.5px; color: var(--muted);
+      user-select: none;
+    }
+    .step-checkbox {
+      appearance: none; -webkit-appearance: none;
+      width: 18px; height: 18px; flex-shrink: 0;
+      border: 1.5px solid var(--border); border-radius: 5px;
+      background: var(--surface2);
+      cursor: pointer;
+      position: relative;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .step-checkbox:hover { border-color: var(--purple-lo); }
+    .step-checkbox:checked {
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      border-color: var(--purple);
+      box-shadow: 0 0 10px rgba(155,93,229,.45);
+    }
+    .step-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 1px;
+      width: 5px; height: 9px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .step-check-label:has(.step-checkbox:checked) { color: var(--text); }
 
-  .step-indicator {
-    flex-shrink: 0;
-    display: flex; flex-direction: column; align-items: center; gap: 0;
-  }
+    .next-step-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; font-weight: 500; letter-spacing: .04em;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple-lo), var(--purple));
+      border: none; border-radius: 7px;
+      padding: 9px 16px;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 0 0 rgba(155,93,229,0);
+      margin-left: auto;
+    }
+    .next-step-btn:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(155,93,229,.35);
+    }
+    .next-step-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+      background: var(--surface2);
+      color: var(--muted);
+    }
 
-  .step-circle {
-    width: 26px; height: 26px; border-radius: 50%;
-    border: 1.5px solid var(--purple);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    color: var(--purple); font-weight: 600; flex-shrink: 0;
-    transition: background .25s, color .25s, box-shadow .25s;
-  }
-  .step-circle.done {
-    background: var(--purple);
-    color: #fff;
-    box-shadow: 0 0 12px rgba(155,93,229,.6);
-  }
+    .completion-message {
+      max-width: 920px; margin: 0 auto 40px;
+      padding: 0 48px;
+      position: relative; z-index: 1;
+      display: none;
+    }
+    .completion-message.show {
+      display: block;
+      animation: completionPop .5s ease;
+    }
+    .completion-card {
+      background: linear-gradient(135deg, rgba(155,93,229,.16), rgba(61,255,160,.08));
+      border: 1px solid rgba(155,93,229,.4);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(155,93,229,.18);
+    }
+    .completion-card .big-emoji { font-size: 38px; margin-bottom: 10px; }
+    .completion-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px; font-weight: 700;
+      background: linear-gradient(120deg, #fff 30%, var(--purple-hi));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .completion-card p { color: var(--muted); font-size: 13.5px; }
 
-  .step-line {
-    width: 1px; flex: 1; min-height: 20px;
-    background: linear-gradient(to bottom, var(--purple), transparent);
-    margin-top: 4px;
-  }
+    @keyframes completionPop {
+      0%   { opacity: 0; transform: translateY(14px) scale(.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
 
-  .step-content { flex: 1; padding-top: 2px; }
-
-  .step-content h4 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 600;
-    color: var(--text); margin-bottom: 6px;
-  }
-
-  .step-content p { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; }
-
-  /* ── CODE / PRE ── */
-  pre {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--purple);
-    border-radius: 8px;
-    padding: 13px 16px;
-    margin-top: 8px;
-    overflow-x: auto;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; line-height: 1.65;
-    color: #C8C0E8;
-    position: relative;
-  }
-
-  pre[data-lang]::before {
-    content: attr(data-lang);
-    position: absolute; top: 7px; right: 10px;
-    font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--purple); opacity: .55;
-  }
-
-  .hl-cmd   { color: var(--green); }
-  .hl-key   { color: var(--purple-hi); }
-  .hl-val   { color: #A8E6CF; }
-  .hl-cmt   { color: #3E3560; font-style: italic; }
-  .hl-path  { color: var(--amber); }
-  .hl-str   { color: #F8A4C8; }
-  .hl-dir   { color: var(--purple-hi); }
-
-  /* ── INLINE CODE ── */
-  .ic {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    background: var(--surface2); color: var(--purple-hi);
-    border: 1px solid var(--border);
-    padding: 1px 6px; border-radius: 4px;
-  }
-
-  /* ── CALLOUTS ── */
-  .callout {
-    display: flex; gap: 11px;
-    border-radius: 8px; padding: 12px 15px;
-    margin-top: 10px; font-size: 13px;
-  }
-  .callout .ico { flex-shrink: 0; margin-top: 1px; }
-  .callout.info { background: rgba(155,93,229,.09); border: 1px solid rgba(155,93,229,.28); color: #CDB8F5; }
-  .callout.warn { background: rgba(255,179,71,.08); border: 1px solid rgba(255,179,71,.24); color: #F5D08A; }
-  .callout.tip  { background: rgba(61,255,160,.07); border: 1px solid rgba(61,255,160,.2);  color: #8AFFD0; }
-
-  /* ── PREREQ BADGES ── */
-  .prereqs {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    margin-bottom: 18px;
-  }
-  .prereq {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    padding: 4px 11px; border-radius: 6px;
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--muted);
-  }
-  .prereq span { color: var(--text); font-weight: 500; }
-
-  /* ── CONFIG REFERENCE ── */
-  .config-table {
-    width: 100%; border-collapse: collapse;
-    font-size: 13px; margin-top: 4px;
-  }
-  .config-table th {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--purple); font-weight: 600;
-    padding: 10px 14px; text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  .config-table td {
-    padding: 10px 14px; color: var(--muted);
-    border-bottom: 1px solid rgba(43,37,69,.45);
-    vertical-align: top;
-  }
-  .config-table tr:last-child td { border-bottom: none; }
-  .config-table td:first-child {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--purple-hi);
-    white-space: nowrap;
-  }
-  .config-table td:last-child { font-size: 12px; }
-
-  /* ── SCRIPTS TABLE ── */
-  .scripts-grid {
-    display: grid; gap: 12px;
-  }
-
-  .script-row {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-    display: grid; grid-template-columns: 240px 1fr;
-    gap: 16px; align-items: start;
-    transition: border-color .2s;
-  }
-  .script-row:hover { border-color: var(--purple-lo); }
-
-  .script-name {
-    font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
-    color: var(--amber); font-weight: 500;
-  }
-
-  .script-ext {
-    font-size: 10px; color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .script-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
-
-  .script-desc ul { list-style: none; margin-top: 6px; }
-  .script-desc ul li {
-    display: flex; align-items: center; gap: 7px;
-    padding: 2px 0; font-size: 12.5px;
-  }
-  .script-desc ul li::before {
-    content: '▸'; color: var(--purple); font-size: 9px;
-  }
-
-  /* ── CHECKLIST ── */
-  .checklist-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px; padding: 26px 28px;
-    margin-top: 8px;
-  }
-  .checklist-card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px; font-weight: 700;
-    margin-bottom: 20px; color: var(--text);
-  }
-  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
-  .check-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 13.5px; color: var(--muted); padding: 6px 0;
-    border-bottom: 1px solid rgba(43,37,69,.4);
-  }
-  .check-box {
-    width: 17px; height: 17px; flex-shrink: 0;
-    border: 1.5px solid var(--border); border-radius: 4px;
-    background: var(--surface2);
-  }
-
-  /* ── CREDENTIALS ── */
-  .cred-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px 24px;
-  }
-
-  /* ── TOPOLOGY DIAGRAM ── */
-  .topology {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--purple);
-    border-radius: 8px;
-    padding: 16px 20px; margin-top: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; line-height: 2;
-    color: var(--muted);
-  }
-
-  a { color: var(--purple-hi); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  footer {
-    border-top: 1px solid var(--border);
-    text-align: center; padding: 28px 48px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--muted);
-    position: relative; z-index: 1;
-  }
-
-  /* ── STEP ACTIONS (checkbox + next button) ── */
-  .step-action {
-    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    margin-top: 16px; padding-top: 14px;
-    border-top: 1px dashed var(--border);
-  }
-
-  .step-check-label {
-    display: inline-flex; align-items: center; gap: 9px;
-    cursor: pointer;
-    font-size: 12.5px; color: var(--muted);
-    user-select: none;
-  }
-
-  .step-checkbox {
-    appearance: none; -webkit-appearance: none;
-    width: 18px; height: 18px; flex-shrink: 0;
-    border: 1.5px solid var(--border); border-radius: 5px;
-    background: var(--surface2);
-    cursor: pointer;
-    position: relative;
-    transition: border-color .2s, background .2s, box-shadow .2s;
-  }
-  .step-checkbox:hover { border-color: var(--purple-lo); }
-  .step-checkbox:checked {
-    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
-    border-color: var(--purple);
-    box-shadow: 0 0 10px rgba(155,93,229,.45);
-  }
-  .step-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    left: 5px; top: 1px;
-    width: 5px; height: 9px;
-    border: solid #fff;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-  .step-check-label:has(.step-checkbox:checked) { color: var(--text); }
-
-  .next-step-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px; font-weight: 500; letter-spacing: .04em;
-    color: #fff;
-    background: linear-gradient(135deg, var(--purple-lo), var(--purple));
-    border: none; border-radius: 7px;
-    padding: 9px 16px;
-    cursor: pointer;
-    display: inline-flex; align-items: center; gap: 7px;
-    transition: opacity .2s, transform .15s, box-shadow .2s;
-    box-shadow: 0 0 0 rgba(155,93,229,0);
-    margin-left: auto;
-  }
-  .next-step-btn:not(:disabled):hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(155,93,229,.35);
-  }
-  .next-step-btn:disabled {
-    opacity: .35;
-    cursor: not-allowed;
-    background: var(--surface2);
-    color: var(--muted);
-  }
-
-  /* ── COMPLETION MESSAGE ── */
-  .completion-message {
-    max-width: 920px; margin: 0 auto 40px;
-    padding: 0 48px;
-    position: relative; z-index: 1;
-    display: none;
-  }
-  .completion-message.show {
-    display: block;
-    animation: completionPop .5s ease;
-  }
-  .completion-card {
-    background: linear-gradient(135deg, rgba(155,93,229,.16), rgba(61,255,160,.08));
-    border: 1px solid rgba(155,93,229,.4);
-    border-radius: 16px;
-    padding: 32px;
-    text-align: center;
-    box-shadow: 0 0 40px rgba(155,93,229,.18);
-  }
-  .completion-card .big-emoji { font-size: 38px; margin-bottom: 10px; }
-  .completion-card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px; font-weight: 700;
-    background: linear-gradient(120deg, #fff 30%, var(--purple-hi));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 8px;
-  }
-  .completion-card p { color: var(--muted); font-size: 13.5px; }
-
-  @keyframes completionPop {
-    0%   { opacity: 0; transform: translateY(14px) scale(.97); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  @media (max-width: 700px) {
-    header, .hero, .wrapper, .completion-message { padding-left: 20px; padding-right: 20px; }
-    .options-grid { grid-template-columns: 1fr; }
-    .check-grid { grid-template-columns: 1fr; }
-    .script-row { grid-template-columns: 1fr; }
-    .next-step-btn { margin-left: 0; }
-  }
-</style>
+    @media (max-width: 700px) {
+      header, .hero, .wrapper, .completion-message { padding-left: 20px; padding-right: 20px; }
+      .options-grid { grid-template-columns: 1fr; }
+      .check-grid { grid-template-columns: 1fr; }
+      .script-row { grid-template-columns: 1fr; }
+      .next-step-btn { margin-left: 0; }
+    }
+  </style>
 </head>
 <body>
+  <canvas id="bg3d"></canvas>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
 
-<canvas id="bg3d"></canvas>
-<div class="glow-orb orb-1"></div>
-<div class="glow-orb orb-2"></div>
+  <header>
+    <div class="logo"><span class="logo-badge">H</span> HIPS</div>
+    <div class="header-pills"><span class="pill">v1.0</span></div>
+  </header>
 
-<!-- HEADER -->
-<header>
-  <div class="logo">
-    <span class="logo-badge">H</span>
-    HIPS
-  </div>
-  
-</header>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="eyebrow">Host Intrusion Prevention System</div>
-  <h1>Installation &amp;<br/>Setup Guide</h1>
-  <p>Choose the installation path that matches your environment. Compiled binaries and automation scripts are included — no manual build required.</p>
-  <div class="hero-tags">
-    <span class="tag"><span class="dot dot-g"></span>Pre-compiled Binaries</span>
-    <span class="tag"><span class="dot dot-p"></span>Java JDK 17+</span>
-    <span class="tag"><span class="dot dot-p"></span>XAMPP Required</span>
-    <span class="tag"><span class="dot dot-a"></span>Windows 10/11</span>
-  </div>
-</div>
-
-<div class="wrapper">
-
-  <!-- ── INSTALLATION OPTIONS OVERVIEW ── -->
-  <div class="section-label">Installation Options</div>
-
-  <div class="options-grid">
-    <div class="option-card recommended">
-      <div class="opt-num">Option 01 <span class="opt-rec">Recommended</span></div>
-      <h3>Quick Start</h3>
-      <p>Single machine. Run two scripts and you're live. Best for most users.</p>
-    </div>
-    <div class="option-card">
-      <div class="opt-num">Option 02</div>
-      <h3>Multi-Machine</h3>
-      <p>One server, multiple agent endpoints. Designed for labs and organizations.</p>
-    </div>
-    <div class="option-card">
-      <div class="opt-num">Option 03</div>
-      <h3>Windows Service</h3>
-      <p>Persistent background monitoring. Survives reboots without user login.</p>
+  <div class="hero">
+    <div class="eyebrow">Host Intrusion Prevention System</div>
+    <h1>Installation &amp; Setup Guide</h1>
+    <p>Verified deployment workflow for a single machine or multi‑endpoint environment.</p>
+    <div class="hero-tags">
+      <span class="tag"><span class="dot dot-g"></span>XAMPP + Java</span>
+      <span class="tag"><span class="dot dot-p"></span>Windows 10/11</span>
+      <span class="tag"><span class="dot dot-a"></span>server/ folder</span>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════
-       OPTION 1 — QUICK START
-  ═══════════════════════════════════════ -->
-  <div class="path-block">
-    <div class="path-header">
-      <div class="path-header-left">
-        <div class="path-num">1</div>
-        <div>
-          <div class="path-title">Quick Start <span style="font-size:11px;color:var(--green);background:rgba(61,255,160,.1);border:1px solid rgba(61,255,160,.25);padding:2px 8px;border-radius:20px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;margin-left:8px;">Recommended</span></div>
-          <div class="path-sub">For users who just want to run HIPS on a single machine</div>
-        </div>
+  <div class="wrapper">
+    <!-- ── OPTION CARDS (preserved) ── -->
+    <div class="section-label">Installation Options</div>
+    <div class="options-grid">
+      <div class="option-card recommended">
+        <div class="opt-num">Option 01 <span class="opt-rec">Recommended</span></div>
+        <h3>Quick Start</h3>
+        <p>Single machine. Run two scripts and you're live. Best for most users.</p>
+      </div>
+      <div class="option-card">
+        <div class="opt-num">Option 02</div>
+        <h3>Multi-Machine</h3>
+        <p>One server, multiple agent endpoints. Designed for labs and organizations.</p>
+      </div>
+      <div class="option-card">
+        <div class="opt-num">Option 03</div>
+        <h3>Windows Service</h3>
+        <p>Persistent background monitoring. Survives reboots without user login.</p>
       </div>
     </div>
-    <div class="path-body">
 
-      <div class="prereqs">
-        <div class="prereq">Requires <span>XAMPP</span></div>
-        <div class="prereq">Requires <span>Java 17+</span></div>
-      </div>
-
-      <!-- Step 1: Copy the HIPS Project into XAMPP -->
-      <div class="install-step" id="step-1">
-        <div class="step-indicator">
-          <div class="step-circle" id="step-circle-1">1</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-content">
-          <h4>Copy the HIPS Project into XAMPP</h4>
-          <p>Copy the entire HIPS project folder (the folder containing the dashboard, API, and related files) into your XAMPP <span class="ic">htdocs</span> directory.</p>
-          <pre data-lang="structure"><span class="hl-dir">XAMPP/</span>
-└── <span class="hl-dir">htdocs/</span>
-    └── <span class="hl-path">hips/</span>
-        ├── <span class="hl-val">dashboard/</span>
-        ├── <span class="hl-val">api/</span>
-        ├── <span class="hl-val">config/</span>
-        ├── <span class="hl-val">agent/</span>
-        └── <span class="hl-cmt">...</span></pre>
-          <div class="callout info">
-            <span class="ico">ℹ️</span>
-            <span><strong>Why this step is needed:</strong> Apache (via XAMPP) only serves files placed inside the <span class="ic">htdocs</span> directory. Since HIPS is a PHP-based dashboard and API, the project must be placed there for Apache to serve it correctly. Otherwise, visiting <span class="ic">http://localhost/hips</span> will result in a "Page Not Found" or similar error.</span>
-          </div>
-
-          <div class="step-action">
-            <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-1"/>
-              I've completed this step
-            </label>
-            <button class="next-step-btn" id="step-next-1" disabled>Next Step →</button>
+    <!-- ════════════════════════════════════════════════════
+         MAIN DEPLOYMENT PATH (corrected workflow)
+    ════════════════════════════════════════════════════ -->
+    <div class="path-block">
+      <div class="path-header">
+        <div class="path-header-left">
+          <div class="path-num">•</div>
+          <div>
+            <div class="path-title">Verified Installation</div>
+            <div class="path-sub">Follow these steps in order</div>
           </div>
         </div>
       </div>
+      <div class="path-body">
 
-      <!-- Step 2: Configure the Agent (was Step 3) -->
-      <div class="install-step" id="step-2">
-        <div class="step-indicator">
-          <div class="step-circle" id="step-circle-2">2</div>
-          <div class="step-line"></div>
+        <!-- STEP 1: Database Setup -->
+        <div class="install-step" id="step-1">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-1">1</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h4>Database Setup</h4>
+            <p>Create the database and import the schema.</p>
+            <pre data-lang="sql">CREATE DATABASE hips_db;
+USE hips_db;
+SOURCE database/schema.sql;</pre>
+            <div class="callout info">
+              <span class="ico">ℹ️</span>
+              <span><strong>Optional:</strong> The fourth migration step (<code>database/migration.sql</code>) was not required during testing and may be skipped unless additional updates are provided.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-1" /> I've completed this step</label>
+              <button class="next-step-btn" id="step-next-1" disabled>Next Step →</button>
+            </div>
+          </div>
         </div>
-        <div class="step-content">
-          <h4>Configure the Agent</h4>
-          <p>Rename the example config file, then open it and fill in your values:</p>
-          <pre data-lang="rename"><span class="hl-cmt">// Rename this file:</span>
+
+        <!-- STEP 2: Server Setup (corrected) -->
+        <div class="install-step" id="step-2">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-2">2</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h4>Server Setup</h4>
+            <p>Copy the entire <span class="ic">server</span> folder into XAMPP's <span class="ic">htdocs</span> directory.</p>
+            <pre data-lang="structure">xampp/
+└── htdocs/
+    └── server/          <span class="hl-cmt">← folder name must remain "server"</span>
+        ├── dashboard/
+        ├── api/
+        ├── config/
+        └── ...</pre>
+            <div class="callout info">
+              <span class="ico">ℹ️</span>
+              <span>Apache serves only files inside <span class="ic">htdocs</span>. The folder name <strong>server</strong> is required because the agent configuration references it.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-2" /> I've completed this step</label>
+              <button class="next-step-btn" id="step-next-2" disabled>Next Step →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Agent Configuration -->
+        <div class="install-step" id="step-3">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-3">3</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h4>Agent Configuration</h4>
+            <p>Rename the example config and set the required values.</p>
+            <pre data-lang="rename"><span class="hl-cmt">// Rename this file:</span>
 <span class="hl-path">config/hips-agent.properties.example</span>
-
 <span class="hl-cmt">// To:</span>
 <span class="hl-path">config/hips-agent.properties</span></pre>
-          <pre data-lang="properties" style="margin-top:10px"><span class="hl-key">server.url</span>         = <span class="hl-str">http://localhost/hips</span>
-<span class="hl-key">auth.token</span>         = <span class="hl-str">YOUR_TOKEN</span>
-<span class="hl-key">agent.uuid</span>         = <span class="hl-str">GENERATE_UUID</span>
-<span class="hl-key">agent.owner</span>        = <span class="hl-str">Workstation-01</span>
+            <pre data-lang="properties"><span class="hl-key">server.url</span>         = <span class="hl-str">http://localhost/server</span>
+<span class="hl-key">auth.token</span>         = <span class="hl-cmt"># automatically generated — do not modify</span>
+<span class="hl-key">agent.owner</span>        = <span class="hl-str">Office-PC</span>
 <span class="hl-key">watch.directories</span>  = <span class="hl-path">C:\Users\&lt;username&gt;\Desktop</span></pre>
-          <div class="callout info">
-            <span class="ico">ℹ️</span>
-            <span>Generate a UUID at <a href="https://www.uuidgenerator.net" target="_blank">uuidgenerator.net</a> — each endpoint must have a unique value.</span>
-          </div>
-
-          <div class="step-action">
-            <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-2"/>
-              I've completed this step
-            </label>
-            <button class="next-step-btn" id="step-next-2" disabled>Next Step →</button>
+            <div class="callout info">
+              <span class="ico">ℹ️</span>
+              <span><span class="ic">auth.token</span> is automatically generated. Do not change it. <span class="ic">agent.owner</span> can be any descriptive name.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-3" /> I've completed this step</label>
+              <button class="next-step-btn" id="step-next-3" disabled>Next Step →</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Step 3: Start the Agent (was Step 4) -->
-      <div class="install-step" id="step-3">
-        <div class="step-indicator">
-          <div class="step-circle" id="step-circle-3">3</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-content">
-          <h4>Start the Agent</h4>
-          <pre data-lang="bat"><span class="hl-cmd">run-agent.bat</span></pre>
-          <p style="margin-top:8px">The agent will connect to the server and begin endpoint monitoring.</p>
-
-          <div class="step-action">
-            <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-3"/>
-              I've completed this step
-            </label>
-            <button class="next-step-btn" id="step-next-3" disabled>Next Step →</button>
+        <!-- STEP 4: Recompile Agent (new) -->
+        <div class="install-step" id="step-4">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-4">4</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <h4>Recompile Agent</h4>
+            <p>Run the recompilation script to apply the new configuration.</p>
+            <pre data-lang="bat"><span class="hl-cmd">recompile-agent.bat</span></pre>
+            <div class="callout tip">
+              <span class="ico">💡</span>
+              <span>Recompilation updates the agent binary with your settings before execution.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-4" /> I've completed this step</label>
+              <button class="next-step-btn" id="step-next-4" disabled>Next Step →</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Step 4: Start the Server (was Step 2) — final step -->
-      <div class="install-step" id="step-4">
-        <div class="step-indicator">
-          <div class="step-circle" id="step-circle-4">4</div>
-        </div>
-        <div class="step-content">
-          <h4>Start the Server</h4>
-          <p>Run the startup script from the project root. This starts Apache, MySQL, and initialises the HIPS server automatically.</p>
-          <pre data-lang="bat"><span class="hl-cmd">start-hips-server.bat</span></pre>
-          <div class="callout tip">
-            <span class="ico">✅</span>
-            <span>This script handles Apache, MySQL, and HIPS dashboard startup in a single step.</span>
+        <!-- STEP 5: Run Server -->
+        <div class="install-step" id="step-5">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-5">5</div>
+            <div class="step-line"></div>
           </div>
-
-          <div class="step-action">
-            <label class="step-check-label">
-              <input type="checkbox" class="step-checkbox" id="step-check-4"/>
-              I've completed this step
-            </label>
+          <div class="step-content">
+            <h4>Run the Server</h4>
+            <p>Start all server components with a single script.</p>
+            <pre data-lang="bat"><span class="hl-cmd">Start HIPS Server.bat</span></pre>
+            <div class="callout info">
+              <span class="ico">ℹ️</span>
+              <span>This starts Apache, MySQL, the dashboard, and the server API. After startup, access the dashboard at <span class="ic">http://localhost/server/dashboard</span>.</span>
+            </div>
+            <div class="step-action">
+              <label class="step-check-label"><input type="checkbox" class="step-checkbox" id="step-check-5" /> I've completed this step</label>
+              <button class="next-step-btn" id="step-next-5" disabled>Next Step →</button>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════
-       OPTION 2 — MULTI-MACHINE
-  ═══════════════════════════════════════ -->
-  <div class="path-block">
-    <div class="path-header">
-      <div class="path-header-left">
-        <div class="path-num">2</div>
-        <div>
-          <div class="path-title">Multi-Machine Deployment</div>
-          <div class="path-sub">For organizations or lab environments with multiple endpoints</div>
-        </div>
-      </div>
-    </div>
-    <div class="path-body">
-
-      <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">
-        One central server hosts the dashboard and database. Each endpoint runs an agent pointing back to the server IP.
-        Full guide at <span class="ic">docs/multi-machine-guide.md</span>.
-      </p>
-
-      <div class="topology">
-<span class="hl-dir">Server PC</span>
-│
-├── <span class="hl-val">XAMPP</span>  <span class="hl-cmt">(Apache + MySQL)</span>
-├── <span class="hl-val">MySQL</span>   <span class="hl-cmt">(hips_db)</span>
-└── <span class="hl-val">Dashboard</span> → <span class="hl-cmd">http://&lt;SERVER-IP&gt;/hips/dashboard</span>
-
-<span class="hl-dir">Agent PC 1</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/hips</span>
-<span class="hl-dir">Agent PC 2</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/hips</span>
-<span class="hl-dir">Agent PC 3</span>  →  <span class="hl-key">server.url</span>=<span class="hl-str">http://192.168.1.50/hips</span></div>
-
-      <div class="callout info" style="margin-top:14px">
-        <span class="ico">ℹ️</span>
-        <span>Every agent needs a unique <span class="ic">agent.uuid</span> and the same <span class="ic">auth.token</span> as configured on the server.</span>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════
-       OPTION 3 — WINDOWS SERVICE
-  ═══════════════════════════════════════ -->
-  <div class="path-block">
-    <div class="path-header">
-      <div class="path-header-left">
-        <div class="path-num">3</div>
-        <div>
-          <div class="path-title">Windows Service Deployment</div>
-          <div class="path-sub">Persistent background monitoring — survives reboots, no user login required</div>
-        </div>
-      </div>
-    </div>
-    <div class="path-body">
-
-      <p style="color:var(--muted);font-size:14px;margin-bottom:14px;">
-        Full instructions at <span class="ic">docs/windows-service-guide.md</span>.
-      </p>
-
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:14px 16px;">
-          <div style="color:var(--green);font-size:18px;margin-bottom:6px;">⚡</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Auto-Start</div>
-          <div style="font-size:12px;color:var(--muted);">Launches automatically at Windows boot</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:14px 16px;">
-          <div style="color:var(--purple-hi);font-size:18px;margin-bottom:6px;">🔒</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">No Login Needed</div>
-          <div style="font-size:12px;color:var(--muted);">Runs as a background service without a session</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:14px 16px;">
-          <div style="color:var(--amber);font-size:18px;margin-bottom:6px;">📡</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Continuous</div>
-          <div style="font-size:12px;color:var(--muted);">Uninterrupted endpoint monitoring 24/7</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ── CONFIGURATION REFERENCE ── -->
-  <div class="section-label">Configuration Reference</div>
-
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
-    <table class="config-table">
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Description</th>
-          <th>Example</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>server.url</td>
-          <td>URL of the HIPS dashboard server</td>
-          <td><span class="ic">http://192.168.1.50/hips</span></td>
-        </tr>
-        <tr>
-          <td>auth.token</td>
-          <td>Shared secret between agent and server. 16+ chars, mixed case + symbols.</td>
-          <td><span class="ic">6j8J#v9Lm2@Xp83Rt</span></td>
-        </tr>
-        <tr>
-          <td>agent.uuid</td>
-          <td>Unique machine identifier. Generate at <a href="https://www.uuidgenerator.net" target="_blank">uuidgenerator.net</a></td>
-          <td><span class="ic">1f32f7d8-7c8c-4f8c-a431-c3f1dbe93c77</span></td>
-        </tr>
-        <tr>
-          <td>agent.owner</td>
-          <td>Human-readable label shown in the dashboard</td>
-          <td><span class="ic">Finance-PC</span> · <span class="ic">SOC-Lab-01</span></td>
-        </tr>
-        <tr>
-          <td>watch.directories</td>
-          <td>Comma-separated list of paths to monitor for file changes</td>
-          <td><span class="ic">C:\Users\John\Desktop,C:\Users\John\Documents</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:6px;">
-    <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--purple-hi);margin-bottom:10px;">watch.directories — Examples</div>
-    <pre data-lang="properties"><span class="hl-cmt">// Desktop only</span>
-<span class="hl-key">watch.directories</span> = <span class="hl-path">C:\Users\&lt;username&gt;\Desktop</span>
-
-<span class="hl-cmt">// Desktop + Documents</span>
-<span class="hl-key">watch.directories</span> = <span class="hl-path">C:\Users\&lt;username&gt;\Desktop,C:\Users\&lt;username&gt;\Documents</span>
-
-<span class="hl-cmt">// Custom sensitive folder</span>
-<span class="hl-key">watch.directories</span> = <span class="hl-path">D:\SensitiveData</span></pre>
-  </div>
-
-  <!-- ── INCLUDED SCRIPTS ── -->
-  <div class="section-label">Included Scripts</div>
-
-  <div class="scripts-grid">
-    <div class="script-row">
-      <div>
-        <div class="script-name">start-hips-server.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Starts all server-side services in one step.
-        <ul>
-          <li>Starts Apache</li>
-          <li>Starts MySQL</li>
-          <li>Initialises the HIPS dashboard</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">stop-hips-server.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Gracefully stops all HIPS server services.
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">run-agent.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Starts the endpoint monitoring agent using the pre-compiled binary in <span class="ic">agent/bin</span>.
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">discovery-launcher-temp.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Automatic discovery launcher for agent deployment across the network.
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">discovery-service.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Discovery service for multi-machine deployments. Coordinates agent registration across endpoints.
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">hips-watchdog-temp.ps1</div>
-        <div class="script-ext">.ps1 · PowerShell</div>
-      </div>
-      <div class="script-desc">
-        Monitors running HIPS processes and auto-recovers from crashes.
-        <ul>
-          <li>Detects service crashes</li>
-          <li>Automatically restarts failed components</li>
-          <li>Improves overall reliability</li>
-        </ul>
-        <pre data-lang="powershell" style="margin-top:8px"><span class="hl-cmd">powershell -ExecutionPolicy Bypass -File hips-watchdog-temp.ps1</span></pre>
-      </div>
-    </div>
-
-    <div class="script-row">
-      <div>
-        <div class="script-name">deploy-package.bat</div>
-        <div class="script-ext">.bat · Windows Batch</div>
-      </div>
-      <div class="script-desc">
-        Packages a deployment-ready distribution for additional endpoints. Output includes:
-        <ul>
-          <li><span class="ic">agent/</span> compiled binaries</li>
-          <li><span class="ic">config/</span> property templates</li>
-          <li>Required libraries</li>
-          <li>Startup scripts</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── DEFAULT CREDENTIALS ── -->
-  <div class="section-label">Default Credentials</div>
-
-  <div class="cred-block">
-    <p style="color:var(--muted);font-size:13.5px;margin-bottom:14px;">Used on first login only. Change immediately after setup.</p>
-    <pre data-lang="credentials"><span class="hl-key">Username:</span>  <span class="hl-val">admin</span>
-<span class="hl-key">Password:</span>  <span class="hl-val">CHANGE_ME_ON_FIRST_LOGIN</span></pre>
-    <div class="callout warn" style="margin-top:12px">
-      <span class="ico">⚠️</span>
-      <span>Change the default password immediately via <strong>Dashboard → Settings</strong>. Never leave default credentials in a production environment.</span>
-    </div>
-  </div>
-
-  <!-- ── VERIFICATION CHECKLIST ── -->
-  <div class="section-label">Verification Checklist</div>
-
-  <div class="checklist-card">
-    <h3>✅ Confirm Everything Is Working</h3>
-    <div class="check-grid">
-      <div class="check-item"><div class="check-box"></div>Apache running</div>
-      <div class="check-item"><div class="check-box"></div>MySQL running</div>
-      <div class="check-item"><div class="check-box"></div>Dashboard accessible</div>
-      <div class="check-item"><div class="check-box"></div>Agent registered</div>
-      <div class="check-item"><div class="check-box"></div>Agent shows Online</div>
-      <div class="check-item"><div class="check-box"></div>File monitoring working</div>
-      <div class="check-item"><div class="check-box"></div>Network monitoring working</div>
-      <div class="check-item"><div class="check-box"></div>Alerts appearing in dashboard</div>
-      <div class="check-item"><div class="check-box"></div>Admin password changed</div>
-      <div class="check-item"><div class="check-box"></div>Auth token configured</div>
-      <div class="check-item"><div class="check-box"></div>Monitoring directories set</div>
-    </div>
-    <div class="callout tip" style="margin-top:20px">
-      <span class="ico">🎉</span>
-      <span>All boxes checked? HIPS is successfully deployed and operational.</span>
-    </div>
-  </div>
-
-</div><!-- /wrapper -->
-
-<!-- ── SETUP COMPLETION MESSAGE (shown via JS) ── -->
-<div class="completion-message" id="completion-message">
-  <div class="completion-card">
-    <div class="big-emoji">🎉</div>
-    <h3>Setup Completed 🎉</h3>
-    <p>You've finished all installation steps. HIPS is ready to monitor your endpoint.</p>
-  </div>
-</div>
-
-<footer>
-  HIPS — Host Intrusion Prevention System &nbsp;·&nbsp; SETUP Guide v1.0 &nbsp;·&nbsp; MIT License
-</footer>
-
-<script>
-(function () {
-  /* ════════════════════════════════════════════
-     STEP CHECKBOX / NEXT-STEP BUTTON LOGIC
-  ════════════════════════════════════════════ */
-  var TOTAL_STEPS = 4;
-
-  for (var i = 1; i <= TOTAL_STEPS; i++) {
-    (function (idx) {
-      var checkbox = document.getElementById('step-check-' + idx);
-      var nextBtn = document.getElementById('step-next-' + idx);
-      var circle = document.getElementById('step-circle-' + idx);
-
-      if (!checkbox) return;
-
-      checkbox.addEventListener('change', function () {
-        if (circle) circle.classList.toggle('done', checkbox.checked);
-
-        if (nextBtn) {
-          nextBtn.disabled = !checkbox.checked;
-        }
-
-        // Final step: checking the box shows the completion message
-        if (idx === TOTAL_STEPS) {
-          var completion = document.getElementById('completion-message');
-          if (checkbox.checked) {
-            completion.classList.add('show');
-            completion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          } else {
-            completion.classList.remove('show');
-          }
-        }
-      });
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-          var nextStep = document.getElementById('step-' + (idx + 1));
-          if (nextStep) {
-            nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      }
-    })(i);
-  }
-
-  /* ════════════════════════════════════════════
-     "ALIVE" 3D WIREFRAME BACKGROUND
-     Pure canvas + native JS, no external libraries.
-     Shapes idle-rotate continuously and spin
-     faster/differently in response to scroll.
-  ════════════════════════════════════════════ */
-  var canvas = document.getElementById('bg3d');
-  var ctx = canvas.getContext('2d');
-  var W, H;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  function makeCube(size) {
-    var pts = [];
-    [-1, 1].forEach(function (x) {
-      [-1, 1].forEach(function (y) {
-        [-1, 1].forEach(function (z) {
-          pts.push([x * size, y * size, z * size]);
-        });
-      });
-    });
-    var edges = [];
-    for (var a = 0; a < pts.length; a++) {
-      for (var b = a + 1; b < pts.length; b++) {
-        var diff = 0;
-        for (var k = 0; k < 3; k++) if (pts[a][k] !== pts[b][k]) diff++;
-        if (diff === 1) edges.push([a, b]);
-      }
-    }
-    return { points: pts, edges: edges };
-  }
-
-  function makeOcta(size) {
-    var pts = [
-      [size, 0, 0], [-size, 0, 0],
-      [0, size, 0], [0, -size, 0],
-      [0, 0, size], [0, 0, -size]
-    ];
-    var skip = { '0-1': 1, '2-3': 1, '4-5': 1 };
-    var edges = [];
-    for (var a = 0; a < pts.length; a++) {
-      for (var b = a + 1; b < pts.length; b++) {
-        if (!skip[a + '-' + b]) edges.push([a, b]);
-      }
-    }
-    return { points: pts, edges: edges };
-  }
-
-  function makePyramid(size) {
-    var pts = [
-      [0, -size, 0],
-      [-size, size, -size], [size, size, -size],
-      [size, size, size], [-size, size, size]
-    ];
-    var edges = [
-      [0, 1], [0, 2], [0, 3], [0, 4],
-      [1, 2], [2, 3], [3, 4], [4, 1]
-    ];
-    return { points: pts, edges: edges };
-  }
-
-  var shapes = [
-    { geo: makeCube(64), xR: 0.13, yR: 0.18, rx: 0.3, ry: 0.6, rz: 0.1,
-      base: { x: 0.0007, y: 0.0011, z: 0.0004 }, color: 'rgba(155,93,229,0.30)' },
-    { geo: makeOcta(58), xR: 0.87, yR: 0.66, rx: 0.6, ry: 0.2, rz: 0.4,
-      base: { x: 0.0009, y: 0.0006, z: 0.0008 }, color: 'rgba(199,125,255,0.22)' },
-    { geo: makeCube(46), xR: 0.78, yR: 0.14, rx: 0.2, ry: 0.4, rz: 0.7,
-      base: { x: 0.0005, y: 0.0008, z: 0.0005 }, color: 'rgba(61,255,160,0.16)' },
-    { geo: makePyramid(50), xR: 0.07, yR: 0.82, rx: 0.5, ry: 0.3, rz: 0.2,
-      base: { x: 0.0006, y: 0.0007, z: 0.0006 }, color: 'rgba(155,93,229,0.22)' },
-    { geo: makeOcta(36), xR: 0.50, yR: 0.92, rx: 0.4, ry: 0.5, rz: 0.3,
-      base: { x: 0.0008, y: 0.0005, z: 0.0009 }, color: 'rgba(199,125,255,0.14)' }
-  ];
-
-  function rotatePoint(p, rx, ry, rz) {
-    var x = p[0], y = p[1], z = p[2];
-
-    var cx = Math.cos(rx), sx = Math.sin(rx);
-    var y1 = y * cx - z * sx, z1 = y * sx + z * cx;
-    y = y1; z = z1;
-
-    var cy = Math.cos(ry), sy = Math.sin(ry);
-    var x1 = x * cy + z * sy, z2 = -x * sy + z * cy;
-    x = x1; z = z2;
-
-    var cz = Math.cos(rz), sz = Math.sin(rz);
-    var x2 = x * cz - y * sz, y2 = x * sz + y * cz;
-    x = x2; y = y2;
-
-    return [x, y, z];
-  }
-
-  function project(p) {
-    var fov = 280, viewerZ = 560;
-    var factor = fov / (viewerZ - p[2]);
-    return [p[0] * factor, p[1] * factor];
-  }
-
-  var lastScrollY = window.scrollY || 0;
-  var scrollVelocity = 0;
-
-  function tick() {
-    ctx.clearRect(0, 0, W, H);
-
-    var currentScroll = window.scrollY || window.pageYOffset || 0;
-    var delta = currentScroll - lastScrollY;
-    lastScrollY = currentScroll;
-    // smooth/decay the scroll velocity so motion eases out
-    scrollVelocity = scrollVelocity * 0.9 + delta * 0.1;
-
-    var scrollBoost = scrollVelocity * 0.0014;
-
-    shapes.forEach(function (shape) {
-      shape.rx += shape.base.x + scrollBoost * 0.6;
-      shape.ry += shape.base.y + scrollBoost;
-      shape.rz += shape.base.z + scrollBoost * 0.4;
-
-      var originX = shape.xR * W;
-      var originY = shape.yR * H;
-
-      var projected = shape.geo.points.map(function (p) {
-        var rp = rotatePoint(p, shape.rx, shape.ry, shape.rz);
-        var pr = project(rp);
-        return [originX + pr[0], originY + pr[1]];
-      });
-
-      ctx.strokeStyle = shape.color;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      shape.geo.edges.forEach(function (edge) {
-        var p1 = projected[edge[0]], p2 = projected[edge[1]];
-        ctx.moveTo(p1[0], p1[1]);
-        ctx.lineTo(p2[0], p2[1]);
-      });
-      ctx.stroke();
-    });
-
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
-})();
-</script>
-
-</body>
-</html>
+        <!-- STEP 6: Run Agent -->
+        <div class="install-step" id="step-6">
+          <div class="step-indicator">
+            <div class="step-circle" id="step-circle-6">
